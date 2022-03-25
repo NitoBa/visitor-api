@@ -1,4 +1,5 @@
 import { InvalidNameError } from '../../errors/invalidName'
+import { InvalidDateError } from './errors/invalidDate'
 import { InvalidHourError } from './errors/invalidHour'
 import { Establishment } from './establishment'
 
@@ -36,5 +37,19 @@ describe('Establishment Domain Entity', () => {
 
     expect(sut.isLeft()).toBeTruthy()
     expect(sut.value).toBeInstanceOf(InvalidHourError)
+  })
+
+  it('should not create an establishment with invalid date', () => {
+    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour: 23, date: '32/10/2021' })
+
+    expect(sut.isLeft()).toBeTruthy()
+    expect(sut.value).toBeInstanceOf(InvalidDateError)
+  })
+
+  it('should create an establishment with valid data', () => {
+    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour: 18, date: '28/10/2021' })
+
+    expect(sut.isRight()).toBeTruthy()
+    expect(sut.value).toBeInstanceOf(Establishment)
   })
 })
