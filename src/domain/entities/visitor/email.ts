@@ -30,6 +30,9 @@ export class Email {
     if (account.length > 64) {
       return false
     }
+    if (account.length < 5) {
+      return false
+    }
     const domainParts = address.split('.')
     if (domainParts.some(part => part.length > 63)) {
       return false
