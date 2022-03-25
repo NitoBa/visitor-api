@@ -1,6 +1,6 @@
 
 import { Either, left, right } from '../../shared/either'
-import { InvalidNameError } from '../errors/invalidName'
+import { InvalidNameError } from './errors/invalidName'
 
 export class Name {
   private constructor (private readonly name: string) {}

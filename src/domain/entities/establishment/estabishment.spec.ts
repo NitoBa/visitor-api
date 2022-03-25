@@ -1,6 +1,7 @@
-import { InvalidNameError } from '../../errors/invalidName'
-import { InvalidDateError } from './errors/invalidDate'
-import { InvalidHourError } from './errors/invalidHour'
+
+import { InvalidDateError } from '../../valueObjects/errors/invalidDate'
+import { InvalidHourError } from '../../valueObjects/errors/invalidHour'
+import { InvalidNameError } from '../../valueObjects/errors/invalidName'
 import { Establishment } from './establishment'
 
 describe('Establishment Domain Entity', () => {

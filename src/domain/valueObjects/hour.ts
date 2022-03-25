@@ -1,5 +1,5 @@
 import { Either, left, right } from '../../shared/either'
-import { InvalidHourError } from '../entities/establishment/errors/invalidHour'
+import { InvalidHourError } from './errors/invalidHour'
 
 export class Hour {
   private constructor (public readonly hour: number) {}

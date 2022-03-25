@@ -1,6 +1,6 @@
 
 import { Either, left, right } from '../../shared/either'
-import { InvalidEmailError } from '../errors/invalidEmail'
+import { InvalidEmailError } from './errors/invalidEmail'
 
 export class Email {
   private constructor (private readonly email: string) {}

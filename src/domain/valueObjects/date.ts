@@ -1,5 +1,5 @@
 import { Either, left, right } from '../../shared/either'
-import { InvalidDateError } from '../entities/establishment/errors/invalidDate'
+import { InvalidDateError } from './errors/invalidDate'
 
 export class DateObject {
   private constructor (public readonly date: string) {}

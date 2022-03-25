@@ -1,15 +1,17 @@
 import { Either, left, right } from '../../../shared/either'
-import { InvalidNameError } from '../../errors/invalidName'
 import { DateObject } from '../../valueObjects/date'
+import { InvalidDateError } from '../../valueObjects/errors/invalidDate'
+import { InvalidHourError } from '../../valueObjects/errors/invalidHour'
+import { InvalidNameError } from '../../valueObjects/errors/invalidName'
 import { Hour } from '../../valueObjects/hour'
 import { Name } from '../../valueObjects/name'
-import { InvalidDateError } from './errors/invalidDate'
-import { InvalidHourError } from './errors/invalidHour'
 import { EstablishmentData } from './establishmentData'
 
 type EstablishmentResult = Either<InvalidNameError | InvalidHourError, Establishment>
 
 export class Establishment {
+  private readonly days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
   private constructor (
     private readonly name: Name,
     private readonly openHour: Hour,
