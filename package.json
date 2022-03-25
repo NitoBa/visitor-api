@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "build": "tsc -p tsconfig.prod.json",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/index.ts",
