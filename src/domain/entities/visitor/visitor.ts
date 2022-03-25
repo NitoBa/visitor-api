@@ -1,8 +1,8 @@
 import { Either, left, right } from '../../../shared/either'
-import { InvalidEmailError } from './errors/invalidEmail'
-import { InvalidNameError } from './errors/invalidName'
-import { Email } from './valueObjects/email'
-import { Name } from './valueObjects/name'
+import { InvalidEmailError } from '../../errors/invalidEmail'
+import { InvalidNameError } from '../../errors/invalidName'
+import { Email } from '../../valueObjects/email'
+import { Name } from '../../valueObjects/name'
 import { VisitorData } from './visitorData'
 
 export class Visitor {
