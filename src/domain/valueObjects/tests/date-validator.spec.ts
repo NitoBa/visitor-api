@@ -1,4 +1,4 @@
-import { DateObject } from './date'
+import { DateObject } from '../date'
 
 describe('Date Validator', () => {
   it('should return false if day of date is invalid', () => {
