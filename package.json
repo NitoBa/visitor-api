@@ -12,16 +12,6 @@
     "lint": "eslint --ext .ts, ./src/",
     "lint:fix": "eslint --ext .ts, ./src/ --fix"
   },
-  "lint-staged": {
-    "*.ts": [
-      "npm run lint:fix", "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
