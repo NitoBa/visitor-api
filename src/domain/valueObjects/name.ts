@@ -17,7 +17,7 @@ export class Name {
   }
 
   static validate (name: string): boolean {
-    const tester = /^[^0-9A-Z?,.!$#%*@&_¨()+=-]+$/
+    const tester = /^[^0-9?,.!$#%*@&_¨()+=-]+$/
 
     if (name.length === 0 || name.trim().length < 5 || name.trim().length > 255) {
       return false
