@@ -13,7 +13,9 @@
     "lint:fix": "eslint --ext .ts, ./src/ --fix"
   },
   "lint-staged": {
-    "*.ts": ["npm run lint"]
+    "*.ts": [
+      "npm run lint"
+    ]
   },
   "husky": {
     "hooks": {
@@ -34,7 +36,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
-    "husky": "^7.0.4",
+    "husky": "^4.3.8",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
     "ts-node-dev": "^1.1.8",
