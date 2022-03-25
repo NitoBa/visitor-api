@@ -10,4 +10,9 @@ describe('Hour Validator', () => {
     const sut = Hour.create(-1)
     expect(sut.isLeft()).toBeTruthy()
   })
+
+  it('should return a valid hour', () => {
+    const sut = Hour.create(14)
+    expect(sut.isRight()).toBeTruthy()
+  })
 })
