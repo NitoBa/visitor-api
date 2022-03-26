@@ -1,8 +1,7 @@
 import { left, right } from '../../../shared/either'
 import { RegisterVisitorRepository } from '../../repositories/registerVisitorRepository'
 import { Email, Name, Password } from '../../valueObjects'
-import { InvalidEmailError, InvalidNameError, InvalidPasswordError } from '../../valueObjects/errors'
-import { AlreadyExistsVisitorError, MissingParamsError } from './errors'
+import { AlreadyExistsVisitorError, InvalidParamError, MissingParamsError } from './errors'
 import { RegisterNewVisitorResponse } from './registerNewVisitorResponse'
 import { VisitorRegisterData } from './visitorRegisterData'
 
@@ -20,15 +19,15 @@ export class RegisterNewVisitor implements RegisterVisitor {
       return left(new MissingParamsError(['name', 'email', 'password']))
     }
 
-    if (!Email.validate(email)) return left(new InvalidEmailError(email))
+    if (!Email.validate(email)) return left(new InvalidParamError(email))
 
     const isExists = await this.registerVisitorRepository.existsByEmail(email)
 
     if (isExists) return left(new AlreadyExistsVisitorError(email))
 
-    if (!Name.validate(name)) return left(new InvalidNameError(name))
+    if (!Name.validate(name)) return left(new InvalidParamError(name))
 
-    if (!Password.validate(password)) return left(new InvalidPasswordError(password))
+    if (!Password.validate(password)) return left(new InvalidParamError(password))
 
     await this.registerVisitorRepository.register({ name, email, password })
 

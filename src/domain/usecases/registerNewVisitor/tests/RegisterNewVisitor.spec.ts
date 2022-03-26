@@ -1,5 +1,4 @@
-import { InvalidEmailError, InvalidNameError, InvalidPasswordError } from '../../../valueObjects/errors'
-import { AlreadyExistsVisitorError, MissingParamsError } from '../errors'
+import { AlreadyExistsVisitorError, InvalidParamError, MissingParamsError } from '../errors'
 import { RegisterNewVisitor } from '../registerNewVisitor'
 import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
 
@@ -34,7 +33,7 @@ describe('Register New Visitor', () => {
       password: 'validpassword'
     })
     expect(result.isLeft).toBeTruthy()
-    expect(result.value).toEqual(new InvalidNameError(name))
+    expect(result.value).toEqual(new InvalidParamError(name))
   })
 
   it('should not register a visitor with invalid email', async () => {
@@ -46,7 +45,7 @@ describe('Register New Visitor', () => {
       password: 'validpassword'
     })
     expect(result.isLeft).toBeTruthy()
-    expect(result.value).toEqual(new InvalidEmailError(email))
+    expect(result.value).toEqual(new InvalidParamError(email))
   })
 
   it('should not register a visitor with invalid password', async () => {
@@ -58,7 +57,7 @@ describe('Register New Visitor', () => {
       password
     })
     expect(result.isLeft).toBeTruthy()
-    expect(result.value).toEqual(new InvalidPasswordError(password))
+    expect(result.value).toEqual(new InvalidParamError(password))
   })
 
   it('should calls exists on visitor repository with correct email', async () => {

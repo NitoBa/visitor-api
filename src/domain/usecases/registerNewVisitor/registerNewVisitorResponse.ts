@@ -1,7 +1,6 @@
 import { Either } from '../../../shared/either'
-import { InvalidEmailError, InvalidNameError, InvalidPasswordError } from '../../valueObjects/errors'
-import { AlreadyExistsVisitorError, MissingParamsError } from './errors'
+import { AlreadyExistsVisitorError, InvalidParamError, MissingParamsError } from './errors'
 
-type VisitorRegisterErrors = MissingParamsError | InvalidNameError | InvalidEmailError | InvalidPasswordError | AlreadyExistsVisitorError
+type VisitorRegisterErrors = MissingParamsError | InvalidParamError | AlreadyExistsVisitorError
 
 export type RegisterNewVisitorResponse = Either<VisitorRegisterErrors, void>
