@@ -1,7 +1,5 @@
 import { randomUUID } from 'crypto'
-import { InvalidEmailError } from '../../valueObjects/errors/invalidEmail'
-import { InvalidIdError } from '../../valueObjects/errors/invalidId'
-import { InvalidNameError } from '../../valueObjects/errors/invalidName'
+import { InvalidEmailError, InvalidIdError, InvalidNameError } from '../../valueObjects/errors'
 import { Scheduling } from './scheduling'
 
 describe('Scheduling Domain Entity', () => {

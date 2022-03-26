@@ -1,10 +1,6 @@
 import { Either, left, right } from '../../../shared/either'
-import { Email } from '../../valueObjects/email'
-import { InvalidEmailError } from '../../valueObjects/errors/invalidEmail'
-import { InvalidHourError } from '../../valueObjects/errors/invalidHour'
-import { InvalidNameError } from '../../valueObjects/errors/invalidName'
-import { ID } from '../../valueObjects/id'
-import { Name } from '../../valueObjects/name'
+import { Email, ID, Name } from '../../valueObjects'
+import { InvalidEmailError, InvalidHourError, InvalidNameError } from '../../valueObjects/errors'
 import { SchedulingData } from './schedulingData'
 
 type SchedulingResult = Either<

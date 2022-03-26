@@ -1,4 +1,4 @@
-import { OperatingDays } from '../OperatingDays'
+import { OperatingDays } from '../operatingDays'
 
 describe('Days Work Validator', () => {
   it('should not create a days work if not include a valid days', () => {

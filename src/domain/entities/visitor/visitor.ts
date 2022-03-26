@@ -1,8 +1,6 @@
 import { Either, left, right } from '../../../shared/either'
-import { Email } from '../../valueObjects/email'
-import { InvalidEmailError } from '../../valueObjects/errors/invalidEmail'
-import { InvalidNameError } from '../../valueObjects/errors/invalidName'
-import { Name } from '../../valueObjects/name'
+import { Email, Name } from '../../valueObjects'
+import { InvalidEmailError, InvalidNameError } from '../../valueObjects/errors'
 import { VisitorData } from './visitorData'
 
 type VisitorResult = Either<InvalidEmailError | InvalidNameError, Visitor>

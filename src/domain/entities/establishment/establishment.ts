@@ -1,10 +1,6 @@
 import { Either, left, right } from '../../../shared/either'
-import { InvalidHourError } from '../../valueObjects/errors/invalidHour'
-import { InvalidNameError } from '../../valueObjects/errors/invalidName'
-import { InvalidOperatingDaysError } from '../../valueObjects/errors/invalidOperatingDays'
-import { Hour } from '../../valueObjects/hour'
-import { Name } from '../../valueObjects/name'
-import { OperatingDays } from '../../valueObjects/OperatingDays'
+import { Hour, Name, OperatingDays } from '../../valueObjects'
+import { InvalidHourError, InvalidNameError, InvalidOperatingDaysError } from '../../valueObjects/errors'
 import { EstablishmentData } from './establishmentData'
 
 type EstablishmentResult = Either<InvalidNameError | InvalidHourError, Establishment>
