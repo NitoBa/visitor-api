@@ -1,0 +1,28 @@
+import { Either, left, right } from '../../shared/either'
+import { InvalidIdError } from './errors/invalidId'
+
+export class ID {
+  private constructor (private readonly id: string) {}
+
+  static create (id: string): Either<InvalidIdError, ID> {
+    if (!ID.validate(id)) {
+      return left(new InvalidIdError(id))
+    }
+
+    return right(new ID(id))
+  }
+
+  static validate (id: string): boolean {
+    const tester = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/
+
+    if (id.length === 0) {
+      return false
+    }
+
+    if (!tester.test(id)) {
+      return false
+    }
+
+    return true
+  }
+}
