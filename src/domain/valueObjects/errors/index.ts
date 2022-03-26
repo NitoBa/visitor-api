@@ -5,4 +5,5 @@ export * from './invalidHour'
 export * from './invalidId'
 export * from './invalidName'
 export * from './invalidOperatingDays'
+export * from './invalidPassword'
 
