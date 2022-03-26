@@ -6,13 +6,10 @@ import { Name } from '../../valueObjects/name'
 import { VisitorData } from './visitorData'
 
 export class Visitor {
-  private readonly name: Name
-  private readonly email: Email
-
-  private constructor (name: Name, email: Email) {
-    this.name = name
-    this.email = email
-  }
+  private constructor (
+    private readonly name: Name,
+    private readonly email: Email
+  ) {}
 
   static create (visitorData: VisitorData): Either<InvalidEmailError | InvalidNameError, Visitor> {
     const { name, email } = visitorData
