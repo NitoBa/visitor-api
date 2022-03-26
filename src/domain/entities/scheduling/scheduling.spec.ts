@@ -1,12 +1,13 @@
 import { randomUUID } from 'crypto'
-import { InvalidEmailError, InvalidIdError, InvalidNameError } from '../../valueObjects/errors'
+import { InvalidParamError } from '../../errors'
 import { Scheduling } from './scheduling'
 
 describe('Scheduling Domain Entity', () => {
   it('should not create a Scheduling Entity without a Visitor Name', () => {
+    const name = ''
     const sut = Scheduling.create({
       id: randomUUID(),
-      visitorName: '',
+      visitorName: name,
       visitorEmail: 'visitormail@gmail.com',
       establishmentName: 'EstablishmentName',
       createdAt: new Date(),
@@ -14,7 +15,7 @@ describe('Scheduling Domain Entity', () => {
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidNameError)
+    expect(sut.value).toEqual(new InvalidParamError(name))
   })
 
   it('should not create a Scheduling Entity without a Visitor Name Invalid', () => {
@@ -29,21 +30,22 @@ describe('Scheduling Domain Entity', () => {
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidNameError(invalidName))
+    expect(sut.value).toEqual(new InvalidParamError(invalidName))
   })
 
   it('should not create a Scheduling Entity without a Visitor email', () => {
+    const email = ''
     const sut = Scheduling.create({
       id: randomUUID(),
       visitorName: 'validName',
-      visitorEmail: '',
+      visitorEmail: email,
       establishmentName: 'EstablishmentName',
       createdAt: new Date(),
       updatedAt: new Date()
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidEmailError)
+    expect(sut.value).toEqual(new InvalidParamError(email))
   })
 
   it('should not create a Scheduling Entity with a Visitor email invalid', () => {
@@ -58,7 +60,7 @@ describe('Scheduling Domain Entity', () => {
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidEmailError(invalidEmail))
+    expect(sut.value).toEqual(new InvalidParamError(invalidEmail))
   })
 
   it('should not create a Scheduling Entity with a Visitor email invalid', () => {
@@ -73,21 +75,22 @@ describe('Scheduling Domain Entity', () => {
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidEmailError(invalidEmail))
+    expect(sut.value).toEqual(new InvalidParamError(invalidEmail))
   })
 
   it('should not create a Scheduling Entity without a Establishment Name', () => {
+    const name = ''
     const sut = Scheduling.create({
       id: randomUUID(),
       visitorName: 'invalidName',
       visitorEmail: 'visitormail@gmail.com',
-      establishmentName: '',
+      establishmentName: name,
       createdAt: new Date(),
       updatedAt: new Date()
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidNameError)
+    expect(sut.value).toEqual(new InvalidParamError(name))
   })
 
   it('should not create a Scheduling Entity without a Establishment name invalid', () => {
@@ -102,12 +105,13 @@ describe('Scheduling Domain Entity', () => {
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidNameError(invalidName))
+    expect(sut.value).toEqual(new InvalidParamError(invalidName))
   })
 
   it('should not create a Scheduling Entity without id', () => {
+    const id = ''
     const sut = Scheduling.create({
-      id: '',
+      id,
       visitorName: 'validName',
       visitorEmail: 'visitormail@gmail.com',
       establishmentName: 'validName',
@@ -116,7 +120,7 @@ describe('Scheduling Domain Entity', () => {
     })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidIdError)
+    expect(sut.value).toEqual(new InvalidParamError(id))
   })
 
   it('should create a Scheduling Entity', () => {

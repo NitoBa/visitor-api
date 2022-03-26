@@ -1,9 +1,9 @@
 import { Either, left, right } from '../../../shared/either'
+import { InvalidParamError } from '../../errors'
 import { Email, Name } from '../../valueObjects'
-import { InvalidEmailError, InvalidNameError } from '../../valueObjects/errors'
 import { VisitorData } from './visitorData'
 
-type VisitorResult = Either<InvalidEmailError | InvalidNameError, Visitor>
+type VisitorResult = Either<InvalidParamError, Visitor>
 
 export class Visitor {
   private constructor (
@@ -18,11 +18,11 @@ export class Visitor {
     const nameOrError = Name.create(name)
 
     if (emailOrError.isLeft()) {
-      return left(new InvalidEmailError(email))
+      return left(emailOrError.value)
     }
 
     if (nameOrError.isLeft()) {
-      return left(new InvalidNameError(name))
+      return left(nameOrError.value)
     }
 
     return right(new Visitor(nameOrError.value, emailOrError.value))

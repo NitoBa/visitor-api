@@ -1,13 +1,13 @@
 
 import { Either, left, right } from '../../shared/either'
-import { InvalidEmailError } from './errors/invalidEmail'
+import { InvalidParamError } from '../errors'
 
 export class Email {
   private constructor (private readonly email: string) {}
 
-  static create (email: string): Either<InvalidEmailError, Email> {
+  static create (email: string): Either<InvalidParamError, Email> {
     if (!Email.validate(email)) {
-      return left(new InvalidEmailError(email))
+      return left(new InvalidParamError(email))
     }
     return right(new Email(email))
   }

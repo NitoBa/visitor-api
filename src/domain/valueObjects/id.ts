@@ -1,12 +1,12 @@
 import { Either, left, right } from '../../shared/either'
-import { InvalidIdError } from './errors/invalidId'
+import { InvalidParamError } from '../errors'
 
 export class ID {
   private constructor (private readonly id: string) {}
 
-  static create (id: string): Either<InvalidIdError, ID> {
+  static create (id: string): Either<InvalidParamError, ID> {
     if (!ID.validate(id)) {
-      return left(new InvalidIdError(id))
+      return left(new InvalidParamError(id))
     }
 
     return right(new ID(id))

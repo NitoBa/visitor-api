@@ -1,47 +1,53 @@
-import { InvalidHourError, InvalidNameError, InvalidOperatingDaysError } from '../../valueObjects/errors'
+import { InvalidParamError } from '../../errors'
 import { Establishment } from './establishment'
 
 describe('Establishment Domain Entity', () => {
   it('should not create an establishment without name', () => {
-    const sut = Establishment.create({ name: '', openHour: 12, closedHour: 13, operatingDays: [] })
+    const name = ''
+    const sut = Establishment.create({ name, openHour: 12, closedHour: 13, operatingDays: [] })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidNameError)
+    expect(sut.value).toEqual(new InvalidParamError(name))
   })
 
   it('should not create an establishment with invalid open hour more 23', () => {
-    const sut = Establishment.create({ name: 'Rocketseat', openHour: 25, closedHour: 13, operatingDays: [] })
+    const openHour = 25
+    const sut = Establishment.create({ name: 'Rocketseat', openHour, closedHour: 13, operatingDays: [] })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidHourError)
+    expect(sut.value).toEqual(new InvalidParamError(openHour.toString()))
   })
 
   it('should not create an establishment with invalid open hour less 0', () => {
-    const sut = Establishment.create({ name: 'Rocketseat', openHour: -1, closedHour: 13, operatingDays: [] })
+    const openHour = -1
+    const sut = Establishment.create({ name: 'Rocketseat', openHour, closedHour: 13, operatingDays: [] })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidHourError)
+    expect(sut.value).toEqual(new InvalidParamError(openHour.toString()))
   })
 
   it('should not create an establishment with invalid closed hour less 0', () => {
-    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour: -1, operatingDays: [] })
+    const closedHour = -1
+    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour, operatingDays: [] })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidHourError)
+    expect(sut.value).toEqual(new InvalidParamError(closedHour.toString()))
   })
 
-  it('should not create an establishment with invalid closed hour less 0', () => {
-    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour: 24, operatingDays: [] })
+  it('should not create an establishment with invalid closed hour more 23', () => {
+    const closedHour = 25
+    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour, operatingDays: [] })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidHourError)
+    expect(sut.value).toEqual(new InvalidParamError(closedHour.toString()))
   })
 
   it('should not create an establishment with invalid operating days', () => {
-    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour: 23, operatingDays: [] })
+    const operatingDays: string[] = []
+    const sut = Establishment.create({ name: 'Rocketseat', openHour: 12, closedHour: 23, operatingDays })
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toBeInstanceOf(InvalidOperatingDaysError)
+    expect(sut.value).toEqual(new InvalidParamError(operatingDays.toString()))
   })
 
   it('should create an establishment with valid data', () => {

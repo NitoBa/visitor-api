@@ -1,13 +1,9 @@
 import { Either, left, right } from '../../../shared/either'
+import { InvalidParamError } from '../../errors'
 import { Email, ID, Name } from '../../valueObjects'
-import { InvalidEmailError, InvalidHourError, InvalidNameError } from '../../valueObjects/errors'
 import { SchedulingData } from './schedulingData'
 
-type SchedulingResult = Either<
-InvalidNameError
-| InvalidHourError
-| InvalidEmailError,
-Scheduling>
+type SchedulingResult = Either<InvalidParamError, Scheduling>
 
 export class Scheduling {
   private constructor (

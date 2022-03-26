@@ -1,5 +1,5 @@
+import { InvalidParamError } from '../../errors'
 import { Password } from '../../valueObjects'
-import { InvalidPasswordError } from '../errors'
 
 describe('Password Validator', () => {
   it('should return false if password is empty', () => {
@@ -7,7 +7,7 @@ describe('Password Validator', () => {
     const sut = Password.create(password)
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidPasswordError(password))
+    expect(sut.value).toEqual(new InvalidParamError(password))
   })
 
   it('should return false if password is less than 6 characters', () => {
@@ -15,7 +15,7 @@ describe('Password Validator', () => {
     const sut = Password.create(password)
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidPasswordError(password))
+    expect(sut.value).toEqual(new InvalidParamError(password))
   })
 
   it('should return false if password is more than 20 characters', () => {
@@ -23,7 +23,7 @@ describe('Password Validator', () => {
     const sut = Password.create(password)
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidPasswordError(password))
+    expect(sut.value).toEqual(new InvalidParamError(password))
   })
 
   it('should return false if password no contains uppercase letters', () => {
@@ -31,7 +31,7 @@ describe('Password Validator', () => {
     const sut = Password.create(password)
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidPasswordError(password))
+    expect(sut.value).toEqual(new InvalidParamError(password))
   })
 
   it('should return false if password no contains lowercase letters', () => {
@@ -39,7 +39,7 @@ describe('Password Validator', () => {
     const sut = Password.create(password)
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidPasswordError(password))
+    expect(sut.value).toEqual(new InvalidParamError(password))
   })
 
   it('should return false if password no contains numbers', () => {
@@ -47,7 +47,7 @@ describe('Password Validator', () => {
     const sut = Password.create(password)
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidPasswordError(password))
+    expect(sut.value).toEqual(new InvalidParamError(password))
   })
 
   it('should return false if password no contains special characters', () => {
@@ -55,7 +55,7 @@ describe('Password Validator', () => {
     const sut = Password.create(password)
 
     expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidPasswordError(password))
+    expect(sut.value).toEqual(new InvalidParamError(password))
   })
 
   it('should return true if password is valid', () => {

@@ -1,12 +1,12 @@
 import { Either, left, right } from '../../shared/either'
-import { InvalidDateError } from './errors/invalidDate'
+import { InvalidParamError } from '../errors'
 
 export class DateObject {
   private constructor (public readonly date: string) {}
 
-  static create (date: string): Either<InvalidDateError, DateObject> {
+  static create (date: string): Either<InvalidParamError, DateObject> {
     if (!DateObject.validate(date)) {
-      return left(new InvalidDateError(date))
+      return left(new InvalidParamError(date))
     }
 
     return right(new DateObject(date))

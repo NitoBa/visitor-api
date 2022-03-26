@@ -1,9 +1,9 @@
 import { Either, left, right } from '../../../shared/either'
+import { InvalidParamError } from '../../errors'
 import { Hour, Name, OperatingDays } from '../../valueObjects'
-import { InvalidHourError, InvalidNameError, InvalidOperatingDaysError } from '../../valueObjects/errors'
 import { EstablishmentData } from './establishmentData'
 
-type EstablishmentResult = Either<InvalidNameError | InvalidHourError, Establishment>
+type EstablishmentResult = Either<InvalidParamError, Establishment>
 
 export class Establishment {
   private constructor (
@@ -22,19 +22,19 @@ export class Establishment {
     const operatingDaysOrError = OperatingDays.create(operatingDays)
 
     if (nameOrError.isLeft()) {
-      return left(new InvalidNameError(name))
+      return left(nameOrError.value)
     }
 
     if (openHourOrError.isLeft()) {
-      return left(new InvalidHourError(openHour))
+      return left(openHourOrError.value)
     }
 
     if (closedHourOrError.isLeft()) {
-      return left(new InvalidHourError(closedHour))
+      return left(closedHourOrError.value)
     }
 
     if (operatingDaysOrError.isLeft()) {
-      return left(new InvalidOperatingDaysError(operatingDays))
+      return left(operatingDaysOrError.value)
     }
 
     return right(

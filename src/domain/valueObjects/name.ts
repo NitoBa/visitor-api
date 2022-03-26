@@ -1,6 +1,6 @@
 
 import { Either, left, right } from '../../shared/either'
-import { InvalidNameError } from './errors/invalidName'
+import { InvalidParamError } from '../errors'
 
 export class Name {
   private constructor (private readonly name: string) {}
@@ -9,11 +9,11 @@ export class Name {
     return this.name
   }
 
-  static create (name: string): Either<InvalidNameError, Name> {
+  static create (name: string): Either<InvalidParamError, Name> {
     if (Name.validate(name)) {
       return right(new Name(name))
     }
-    return left(new InvalidNameError(name))
+    return left(new InvalidParamError(name))
   }
 
   static validate (name: string): boolean {

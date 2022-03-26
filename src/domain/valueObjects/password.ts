@@ -1,11 +1,11 @@
 import { Either, left, right } from '../../shared/either'
-import { InvalidPasswordError } from './errors'
+import { InvalidParamError } from '../errors'
 
 export class Password {
-  private constructor (private readonly password: string) {}
-  static create (password: string): Either<InvalidPasswordError, Password> {
+  private constructor (public readonly password: string) {}
+  static create (password: string): Either<InvalidParamError, Password> {
     if (!Password.validate(password)) {
-      return left(new InvalidPasswordError(password))
+      return left(new InvalidParamError(password))
     }
     return right(new Password(password))
   }
