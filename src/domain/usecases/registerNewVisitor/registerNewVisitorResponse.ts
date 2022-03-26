@@ -4,4 +4,4 @@ import { AlreadyExistsVisitorError, MissingParamsError } from './errors'
 
 type VisitorRegisterErrors = MissingParamsError | InvalidNameError | InvalidEmailError | InvalidPasswordError | AlreadyExistsVisitorError
 
-export type RegisterVisitorResponse = Either<VisitorRegisterErrors, void>
+export type RegisterNewVisitorResponse = Either<VisitorRegisterErrors, void>

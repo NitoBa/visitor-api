@@ -3,17 +3,17 @@ import { RegisterVisitorRepository } from '../../repositories/registerVisitorRep
 import { Email, Name, Password } from '../../valueObjects'
 import { InvalidEmailError, InvalidNameError, InvalidPasswordError } from '../../valueObjects/errors'
 import { AlreadyExistsVisitorError, MissingParamsError } from './errors'
-import { RegisterVisitorResponse } from './registerNewVisitorResponse'
+import { RegisterNewVisitorResponse } from './registerNewVisitorResponse'
 import { VisitorRegisterData } from './visitorRegisterData'
 
 interface RegisterVisitor {
-  execute: (visitorRegisterData: VisitorRegisterData) => Promise<RegisterVisitorResponse>
+  execute: (visitorRegisterData: VisitorRegisterData) => Promise<RegisterNewVisitorResponse>
 }
 
 export class RegisterNewVisitor implements RegisterVisitor {
   constructor (private readonly registerVisitorRepository: RegisterVisitorRepository) {}
 
-  async execute (visitorRegisterData: VisitorRegisterData): Promise<RegisterVisitorResponse> {
+  async execute (visitorRegisterData: VisitorRegisterData): Promise<RegisterNewVisitorResponse> {
     const { name, email, password } = visitorRegisterData
 
     if (name.length === 0 && email.length === 0 && password.length === 0) {
