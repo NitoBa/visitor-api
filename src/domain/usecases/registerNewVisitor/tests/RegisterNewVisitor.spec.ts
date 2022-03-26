@@ -1,95 +1,10 @@
-import { Either, left, right } from '../../shared/either'
-import { DomainError } from '../errors/domainError'
-import { Email, Name, Password } from '../valueObjects'
-import { InvalidEmailError, InvalidNameError, InvalidPasswordError } from '../valueObjects/errors'
-
-class MissingParamsError extends Error implements DomainError {
-  constructor (public readonly params: string[]) {
-    super(`Error: ${params.toString()} is missing`)
-    this.name = 'MissingParamsError'
-  }
-}
-
-class AlreadyExistsVisitorError extends Error implements DomainError {
-  constructor (public readonly email: string) {
-    super(`Error: the visitor with email "${email}" already exists`)
-    this.name = 'AlreadyExistsError'
-  }
-}
-
-interface VisitorRegisterData {
-  name: string
-  email: string
-  password: string
-}
-
-type VisitorRegisterErrors = MissingParamsError | InvalidNameError | InvalidEmailError | InvalidPasswordError | AlreadyExistsVisitorError
-
-type RegisterVisitorResponse = Either<VisitorRegisterErrors, void>
-
-interface VisitorRepository {
-  existsByEmail: (email: string) => Promise<boolean>
-  register: (name: string, email: string, password: string) => Promise<void>
-}
-interface RegisterVisitor {
-  execute: (visitorRegisterData: VisitorRegisterData) => Promise<RegisterVisitorResponse>
-}
-
-class VisitorRepositorySpy implements VisitorRepository {
-  email?: string
-  name?: string
-  password?: string
-  output = false
-  callsCountExists = 0
-  callsCountRegister = 0
-  async existsByEmail (email: string): Promise<boolean> {
-    this.email = email
-    this.callsCountExists++
-    return this.output
-  }
-
-  async register (name: string, email: string, password: string): Promise<void> {
-    this.name = name
-    this.email = email
-    this.password = password
-    this.callsCountRegister++
-  }
-}
-
-class RegisterNewVisitor implements RegisterVisitor {
-  constructor (private readonly visitorRepository: VisitorRepository) {}
-
-  async execute (visitorRegisterData: VisitorRegisterData): Promise<RegisterVisitorResponse> {
-    const { name, email, password } = visitorRegisterData
-
-    if (name.length === 0 && email.length === 0 && password.length === 0) {
-      return left(new MissingParamsError(['name', 'email', 'password']))
-    }
-
-    if (!Email.validate(email)) {
-      return left(new InvalidEmailError(email))
-    }
-
-    const isExists = await this.visitorRepository.existsByEmail(email)
-
-    if (isExists) return left(new AlreadyExistsVisitorError(email))
-
-    if (!Name.validate(name)) {
-      return left(new InvalidNameError(name))
-    }
-
-    if (!Password.validate(password)) {
-      return left(new InvalidPasswordError(password))
-    }
-
-    await this.visitorRepository.register(name, email, password)
-
-    return right(undefined)
-  }
-}
+import { InvalidEmailError, InvalidNameError, InvalidPasswordError } from '../../../valueObjects/errors'
+import { AlreadyExistsVisitorError, MissingParamsError } from '../errors'
+import { RegisterNewVisitor } from '../registerNewVisitor'
+import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
 
 const makeSut = (): {
-  sut: RegisterVisitor
+  sut: RegisterNewVisitor
   visitorRepository: VisitorRepositorySpy
 } => {
   const visitorRepository = new VisitorRepositorySpy()
