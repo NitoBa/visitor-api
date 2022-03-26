@@ -1,4 +1,4 @@
-import { Hour } from './hour'
+import { Hour } from '../hour'
 
 describe('Hour Validator', () => {
   it('should return an error if the hour is increase 23', () => {

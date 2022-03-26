@@ -1,4 +1,4 @@
-import { Name } from './name'
+import { Name } from '../name'
 
 describe('Name Validator', () => {
   it('should return true if name is valid', () => {

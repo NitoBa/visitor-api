@@ -1,4 +1,4 @@
-import { Email } from './email'
+import { Email } from '../email'
 
 describe('Email Validator', () => {
   it('should return true if email is valid', () => {
