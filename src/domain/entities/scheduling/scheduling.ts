@@ -13,24 +13,13 @@ InvalidNameError
 Scheduling>
 
 export class Scheduling {
-  private readonly visitorName: Name
-  private readonly visitorEmail: Email
-  private readonly establishmentName: Name
-  private readonly createdAt: Date
-  private readonly updatedAt: Date
   private constructor (
-    visitorName: Name,
-    visitorEmail: Email,
-    establishmentName: Name,
-    createdAt: Date,
-    updatedAt: Date
-  ) {
-    this.visitorName = visitorName
-    this.visitorEmail = visitorEmail
-    this.establishmentName = establishmentName
-    this.createdAt = createdAt
-    this.updatedAt = updatedAt
-  }
+    private readonly visitorName: Name,
+    private readonly visitorEmail: Email,
+    private readonly establishmentName: Name,
+    private readonly createdAt: Date,
+    private readonly updatedAt: Date
+  ) {}
 
   static create (schedulingData: SchedulingData): SchedulingResult {
     const {
