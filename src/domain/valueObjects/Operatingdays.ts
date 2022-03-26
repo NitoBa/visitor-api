@@ -26,7 +26,7 @@ export class OperatingDays {
     if (daysInput.length === 0) return false
 
     return daysInput.every(day => {
-      if ([...days].includes(day) && daysInput.length === new Set(daysInput).size) {
+      if (days.includes(day) && daysInput.length === new Set(daysInput).size) {
         return true
       } else {
         return false
