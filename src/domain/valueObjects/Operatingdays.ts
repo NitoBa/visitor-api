@@ -11,15 +11,15 @@ const days = [
   'Saturday'
 ]
 
-export class DaysWork {
+export class OperatingDays {
   private constructor (public readonly days: string[]) {}
 
-  static create (days: string[]): Either<InvalidDayWorkError, DaysWork> {
-    if (!DaysWork.validate(days)) {
+  static create (days: string[]): Either<InvalidDayWorkError, OperatingDays> {
+    if (!OperatingDays.validate(days)) {
       return left(new InvalidDayWorkError(days))
     }
 
-    return right(new DaysWork(days))
+    return right(new OperatingDays(days))
   }
 
   static validate (daysInput: string[]): boolean {
