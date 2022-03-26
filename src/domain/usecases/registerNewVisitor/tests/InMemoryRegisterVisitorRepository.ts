@@ -13,10 +13,10 @@ export class VisitorRepositorySpy implements RegisterVisitorRepository {
     return this.output
   }
 
-  async register (name: string, email: string, password: string): Promise<void> {
-    this.name = name
-    this.email = email
-    this.password = password
+  async register (input: {name: string, email: string, password: string}): Promise<void> {
+    this.name = input.name
+    this.email = input.email
+    this.password = input.password
     this.callsCountRegister++
   }
 }

@@ -1,4 +1,4 @@
 export interface RegisterVisitorRepository {
   existsByEmail: (email: string) => Promise<boolean>
-  register: (name: string, email: string, password: string) => Promise<void>
+  register: (input: { name: string, email: string, password: string }) => Promise<void>
 }

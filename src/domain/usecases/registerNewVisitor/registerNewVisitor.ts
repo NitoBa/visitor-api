@@ -30,7 +30,7 @@ export class RegisterNewVisitor implements RegisterVisitor {
 
     if (!Password.validate(password)) return left(new InvalidPasswordError(password))
 
-    await this.registerVisitorRepository.register(name, email, password)
+    await this.registerVisitorRepository.register({ name, email, password })
 
     return right(undefined)
   }
