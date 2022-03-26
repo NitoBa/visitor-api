@@ -23,6 +23,8 @@ export class OperatingDays {
   }
 
   static validate (daysInput: string[]): boolean {
+    if (daysInput.length === 0) return false
+
     return daysInput.every(day => {
       if ([...days].includes(day) && daysInput.length === new Set(daysInput).size) {
         return true

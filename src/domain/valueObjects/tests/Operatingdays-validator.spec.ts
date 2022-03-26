@@ -1,4 +1,4 @@
-import { OperatingDays } from '../Operatingdays'
+import { OperatingDays } from '../OperatingDays'
 
 describe('Days Work Validator', () => {
   it('should not create a days work if not include a valid days', () => {
@@ -9,7 +9,7 @@ describe('Days Work Validator', () => {
   })
 
   it('should not create a days work if not include a day', () => {
-    const days = ['']
+    const days: string[] = []
 
     const sut = OperatingDays.create(days)
     expect(sut.isLeft()).toBeTruthy()
