@@ -1,5 +1,5 @@
 import { Either, left, right } from '../../shared/either'
-import { InvalidDayWorkError } from './errors/invalidDayWork'
+import { InvalidOperatingDaysError } from './errors/invalidOperatingDays'
 
 const days = [
   'Sunday',
@@ -14,9 +14,9 @@ const days = [
 export class OperatingDays {
   private constructor (public readonly days: string[]) {}
 
-  static create (days: string[]): Either<InvalidDayWorkError, OperatingDays> {
+  static create (days: string[]): Either<InvalidOperatingDaysError, OperatingDays> {
     if (!OperatingDays.validate(days)) {
-      return left(new InvalidDayWorkError(days))
+      return left(new InvalidOperatingDaysError(days))
     }
 
     return right(new OperatingDays(days))
