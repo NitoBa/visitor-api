@@ -9,8 +9,10 @@ export class Establishment extends Entity<EstablishmentData> {
     super(props)
   }
 
+  get props (): EstablishmentData { return this._props as EstablishmentData }
+
   static create (establishmentData: EstablishmentData): Either<InvalidParamError, Establishment> {
-    const { name, openHour, closedHour, operatingDays } = establishmentData
+    const { id, name, openHour, closedHour, operatingDays } = establishmentData
 
     const nameOrError = Name.create(name)
     const openHourOrError = Hour.create(openHour)
@@ -26,6 +28,7 @@ export class Establishment extends Entity<EstablishmentData> {
     if (operatingDaysOrError.isLeft()) return left(operatingDaysOrError.value)
 
     const establishment = new Establishment({
+      id,
       name,
       openHour,
       closedHour,

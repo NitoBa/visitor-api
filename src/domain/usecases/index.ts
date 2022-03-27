@@ -7,6 +7,7 @@ export * from './getAllAvailableEstablishmentsByTime/getAllAvailableEstablishmen
 export * from './getAllAvailableEstablishmentsByTime/getAllAvailableEstablishmentsByTimeData';
 export * from './getAllAvailableEstablishmentsByTime/getAllAvailableEstablishmentsByTimeResponse';
 export * from './getEstablishmentById/getEstablishmentById';
+export * from './getEstablishmentById/getEstablishmentByIdResponse';
 export * from './registerNewVisitor/registerNewVisitor';
 export * from './registerNewVisitor/registerNewVisitorResponse';
 export * from './registerNewVisitor/visitorRegisterData';
