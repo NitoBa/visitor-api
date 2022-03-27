@@ -10,14 +10,24 @@ interface IAuthenticateVisitor {
   execute: (params: AuthenticateVisitorData) => Promise<AuthenticateVisitorResponse>
 }
 
+export interface AuthenticateVisitorDeps {
+  getVisitorByEmailRepository: IGetVisitorByEmailRepository
+  encryptorRepository: IEncryptorRepository
+  tokenGeneratorRepository: ITokenGeneratorRepository
+}
+
 export class AuthenticateVisitor implements IAuthenticateVisitor {
   constructor (
-    private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
-    private readonly encryptorRepository: IEncryptorRepository,
-    private readonly tokenGeneratorRepository: ITokenGeneratorRepository
+    private readonly deps: AuthenticateVisitorDeps
   ) {}
 
   async execute (input: AuthenticateVisitorData): Promise<AuthenticateVisitorResponse> {
+    const {
+      getVisitorByEmailRepository,
+      encryptorRepository,
+      tokenGeneratorRepository
+    } = this.deps
+
     const { email, password } = input
     if (email.length === 0 && password.length === 0) {
       return left(new MissingParamsError(['email', 'password']))
@@ -26,16 +36,16 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
     if (!Email.validate(email)) return left(new InvalidParamError(email))
     if (!Password.validate(password)) return left(new InvalidParamError(password))
 
-    const isVisitorExistents = await this.getVisitorByEmailRepository.getByEmail(email)
+    const isVisitorExistents = await getVisitorByEmailRepository.getByEmail(email)
 
     if (isVisitorExistents === null || isVisitorExistents === undefined) {
       return left(new VisitorNotRegistered())
     }
 
-    if (!this.encryptorRepository.compare(password, isVisitorExistents.password)) {
+    if (!encryptorRepository.compare(password, isVisitorExistents.password)) {
       return left(new InvalidParamError(password))
     }
 
-    return right(this.tokenGeneratorRepository.generate(isVisitorExistents.id))
+    return right(tokenGeneratorRepository.generate(isVisitorExistents.id))
   }
 }

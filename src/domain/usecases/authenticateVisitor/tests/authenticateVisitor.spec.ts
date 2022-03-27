@@ -23,11 +23,11 @@ const makeSut = (): {
   const encryptorSpy = makeEncryptor()
   const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository()
 
-  const sut = new AuthenticateVisitor(
+  const sut = new AuthenticateVisitor({
     getVisitorByEmailRepository,
-    encryptorSpy,
-    tokenGeneratorSpy
-  )
+    encryptorRepository: encryptorSpy,
+    tokenGeneratorRepository: tokenGeneratorSpy
+  })
   return {
     sut,
     getVisitorByEmailRepository,
