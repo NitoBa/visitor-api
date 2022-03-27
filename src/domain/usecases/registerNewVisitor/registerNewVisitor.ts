@@ -1,5 +1,6 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
+import { IGetVisitorByEmailRepository } from '../../repositories/getVisitorByEmailRepository'
 import { IRegisterVisitorRepository } from '../../repositories/registerVisitorRepository'
 import { Email, Name, Password } from '../../valueObjects'
 import { AlreadyExistsVisitorError } from './errors'
@@ -11,7 +12,10 @@ interface RegisterVisitor {
 }
 
 export class RegisterNewVisitor implements RegisterVisitor {
-  constructor (private readonly registerVisitorRepository: IRegisterVisitorRepository) {}
+  constructor (
+    private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
+    private readonly registerVisitorRepository: IRegisterVisitorRepository
+  ) {}
 
   async execute (visitorRegisterData: VisitorRegisterData): Promise<RegisterNewVisitorResponse> {
     const { name, email, password } = visitorRegisterData
@@ -22,7 +26,7 @@ export class RegisterNewVisitor implements RegisterVisitor {
 
     if (!Email.validate(email)) return left(new InvalidParamError(email))
 
-    const isExists = await this.registerVisitorRepository.existsByEmail(email)
+    const isExists = await this.getVisitorByEmailRepository.existsByEmail(email)
 
     if (isExists) return left(new AlreadyExistsVisitorError(email))
 

@@ -1,4 +1,5 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
+import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
 import { AlreadyExistsVisitorError } from '../errors'
 import { RegisterNewVisitor } from '../registerNewVisitor'
 import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
@@ -6,11 +7,13 @@ import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
 const makeSut = (): {
   sut: RegisterNewVisitor
   visitorRepository: VisitorRepositorySpy
+  getVisitorByEmailRepository: InMemoryGetVisitorByEmailRepository
 } => {
   const visitorRepository = new VisitorRepositorySpy()
-  const sut = new RegisterNewVisitor(visitorRepository)
+  const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository(false)
+  const sut = new RegisterNewVisitor(getVisitorByEmailRepository, visitorRepository)
 
-  return { sut, visitorRepository }
+  return { sut, visitorRepository, getVisitorByEmailRepository }
 }
 
 describe('Register New Visitor', () => {
@@ -64,18 +67,18 @@ describe('Register New Visitor', () => {
   it('should calls exists on visitor repository with correct email', async () => {
     const email = 'validemail@gmail.com'
 
-    const { sut, visitorRepository } = makeSut()
-    visitorRepository.email = email
+    const { sut, getVisitorByEmailRepository } = makeSut()
+    getVisitorByEmailRepository.email = email
     await sut.execute({
       email,
       name: 'validName',
       password: 'valid_Password123'
     })
-    expect(visitorRepository.callsCountExists).toBe(1)
-    expect(visitorRepository.email).toBe(email)
+    expect(getVisitorByEmailRepository.callsCountExists).toBe(1)
+    expect(getVisitorByEmailRepository.email).toBe(email)
   })
 
-  it('should calls register on visitor repository with correct params', async () => {
+  it('should calls register on get visitor by email repository with correct params', async () => {
     const email = 'validemail@gmail.com'
     const name = 'validName'
     const password = 'valid_Password123'
@@ -96,9 +99,9 @@ describe('Register New Visitor', () => {
   it('should not register a visitor if already registered', async () => {
     const email = 'validemail@gmail.com'
 
-    const { sut, visitorRepository } = makeSut()
+    const { sut, getVisitorByEmailRepository } = makeSut()
 
-    visitorRepository.output = true
+    getVisitorByEmailRepository.existsVisitor = true
 
     const result = await sut.execute({
       email,

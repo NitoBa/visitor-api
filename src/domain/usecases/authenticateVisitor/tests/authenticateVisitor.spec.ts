@@ -1,4 +1,5 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
+import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
 import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorRepository'
@@ -6,10 +7,13 @@ import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorR
 const makeSut = (): {
   sut: AuthenticateVisitor
   authenticateVisitorRepositorySpy: AuthenticateVisitorRepositorySpy
+  getVisitorByEmailRepository: InMemoryGetVisitorByEmailRepository
 } => {
+  const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository()
+
   const authenticateVisitorRepositorySpy = new AuthenticateVisitorRepositorySpy()
-  const sut = new AuthenticateVisitor(authenticateVisitorRepositorySpy)
-  return { sut, authenticateVisitorRepositorySpy }
+  const sut = new AuthenticateVisitor(getVisitorByEmailRepository, authenticateVisitorRepositorySpy)
+  return { sut, authenticateVisitorRepositorySpy, getVisitorByEmailRepository }
 }
 
 describe('Authenticate a visitor', () => {
@@ -43,23 +47,24 @@ describe('Authenticate a visitor', () => {
   it('should calls authenticateVisitorRepository with correct parameters', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
-    const { sut, authenticateVisitorRepositorySpy } = makeSut()
+    const { sut, getVisitorByEmailRepository } = makeSut()
     await sut.execute({ email, password })
-    expect(authenticateVisitorRepositorySpy.email).toBe(email)
+    expect(getVisitorByEmailRepository.email).toBe(email)
   })
 
   it('should calls authenticateVisitorRepository with only once', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
-    const { sut, authenticateVisitorRepositorySpy } = makeSut()
+    const { sut, getVisitorByEmailRepository } = makeSut()
     await sut.execute({ email, password })
-    expect(authenticateVisitorRepositorySpy.callsCountExists).toBe(1)
+    expect(getVisitorByEmailRepository.callsCountExists).toBe(1)
   })
 
   it('should return an error if visitor is not registered', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
-    const { sut } = makeSut()
+    const { sut, getVisitorByEmailRepository } = makeSut()
+    getVisitorByEmailRepository.existsVisitor = false
     const result = await sut.execute({ email, password })
     expect(result.isLeft).toBeTruthy()
     expect(result.value).toEqual(new VisitorNotRegistered())

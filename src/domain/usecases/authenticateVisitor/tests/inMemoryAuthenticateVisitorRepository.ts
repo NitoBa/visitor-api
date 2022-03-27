@@ -1,15 +1,7 @@
-import { IAuthenticateVisitorRepository } from '../../../repositories/authenticateVisitorRepository'
+/* eslint-disable @typescript-eslint/semi */
+import { IAuthenticateVisitorRepository } from '../../../repositories';
 
 export class AuthenticateVisitorRepositorySpy implements IAuthenticateVisitorRepository {
-  callsCountExists = 0
-  email?: string
-  existsVisitor = false
-  async existsByEmail (email: string): Promise<boolean> {
-    this.email = email
-    this.callsCountExists++
-    return this.existsVisitor
-  }
-
   async authenticate (input: { email: string, password: string }): Promise<void> {
 
   }

@@ -1,5 +1,6 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
+import { IGetVisitorByEmailRepository } from '../../repositories'
 import { IAuthenticateVisitorRepository } from '../../repositories/authenticateVisitorRepository'
 import { Email, Password } from '../../valueObjects'
 import { AuthenticateVisitorData } from './authenticateVisitorData'
@@ -11,7 +12,11 @@ interface IAuthenticateVisitor {
 }
 
 export class AuthenticateVisitor implements IAuthenticateVisitor {
-  constructor (private readonly authenticateVisitorRepository: IAuthenticateVisitorRepository) {}
+  constructor (
+    private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
+    private readonly authenticateVisitorRepository: IAuthenticateVisitorRepository
+  ) {}
+
   async execute (input: AuthenticateVisitorData): Promise<AuthenticateVisitorResponse> {
     const { email, password } = input
     if (email.length === 0 && password.length === 0) {
@@ -21,7 +26,7 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
     if (!Email.validate(email)) return left(new InvalidParamError(email))
     if (!Password.validate(password)) return left(new InvalidParamError(password))
 
-    const isExists = await this.authenticateVisitorRepository.existsByEmail(email)
+    const isExists = await this.getVisitorByEmailRepository.existsByEmail(email)
     if (!isExists) return left(new VisitorNotRegistered())
     return right(undefined)
   }
