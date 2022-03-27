@@ -91,24 +91,6 @@ describe('Register New Visitor', () => {
     expect(getVisitorByEmailRepository.email).toBe(email)
   })
 
-  it('should calls register on get visitor by email repository with correct params', async () => {
-    const email = 'validemail@gmail.com'
-    const name = 'validName'
-    const password = 'valid_Password123'
-
-    const { sut, visitorRepository } = makeSut()
-    visitorRepository.email = email
-    visitorRepository.name = name
-    visitorRepository.password = password
-
-    await sut.execute({ name, email, password })
-
-    expect(visitorRepository.callsCountRegister).toBe(1)
-    expect(visitorRepository.name).toBe(name)
-    expect(visitorRepository.email).toBe(email)
-    expect(visitorRepository.password).toBe(password)
-  })
-
   it('should not register a visitor if already registered', async () => {
     const email = 'validemail@gmail.com'
 
@@ -123,6 +105,43 @@ describe('Register New Visitor', () => {
     })
     expect(result.isLeft).toBeTruthy()
     expect(result.value).toEqual(new AlreadyExistsVisitorError(email))
+  })
+
+  it('should call Encryptor with correct parameters', async () => {
+    const name = 'validName'
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, encryptorSpy } = makeSut()
+    await sut.execute({ name, email, password })
+    expect(encryptorSpy.callsCount).toBe(1)
+    expect(encryptorSpy.password).toBe(password)
+  })
+
+  it('should return a password encrypted when call encrypt method', async () => {
+    const name = 'validName'
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, encryptorSpy } = makeSut()
+    await sut.execute({ name, email, password })
+    expect(encryptorSpy.hashedPassword).not.toBe(password)
+  })
+
+  it('should calls register on get visitor by email repository with correct params', async () => {
+    const email = 'validemail@gmail.com'
+    const name = 'validName'
+    const password = 'valid_Password123'
+
+    const { sut, visitorRepository, encryptorSpy } = makeSut()
+    visitorRepository.email = email
+    visitorRepository.name = name
+    visitorRepository.password = password
+
+    await sut.execute({ name, email, password })
+
+    expect(visitorRepository.callsCountRegister).toBe(1)
+    expect(visitorRepository.name).toBe(name)
+    expect(visitorRepository.email).toBe(email)
+    expect(visitorRepository.password).toBe(encryptorSpy.hashedPassword)
   })
 
   it('should a new visitor and return void', async () => {

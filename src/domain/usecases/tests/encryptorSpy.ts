@@ -5,7 +5,9 @@ export class EncryptorSpy implements IEncryptorRepository {
   password = 'password'
   hashedPassword = 'hashedPassword'
   encrypt (value: string): string {
-    return ''
+    this.callsCount++
+    this.password = value
+    return this.hashedPassword
   }
 
   compare (value: string, hash: string): boolean {

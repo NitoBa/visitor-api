@@ -36,7 +36,9 @@ export class RegisterNewVisitor implements RegisterVisitor {
 
     if (!Password.validate(password)) return left(new InvalidParamError(password))
 
-    await this.registerVisitorRepository.register({ name, email, password })
+    const encryptedPassword = this.encryptorRepository.encrypt(password)
+
+    await this.registerVisitorRepository.register({ name, email, password: encryptedPassword })
 
     return right(undefined)
   }
