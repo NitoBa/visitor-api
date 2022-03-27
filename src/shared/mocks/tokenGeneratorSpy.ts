@@ -1,4 +1,4 @@
-import { ITokenGeneratorRepository } from '../../repositories'
+import { ITokenGeneratorRepository } from '../../domain/repositories'
 
 export class TokenGeneratorRepositorySpy implements ITokenGeneratorRepository {
   callsCount = 0

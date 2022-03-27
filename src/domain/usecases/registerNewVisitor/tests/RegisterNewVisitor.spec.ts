@@ -1,9 +1,9 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { EncryptorSpy } from '../../tests/encryptorSpy'
-import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
+import { EncryptorSpy } from '../../../../shared/mocks/encryptorSpy'
+import { InMemoryGetVisitorByEmailRepository } from '../../../../shared/mocks/inMemoryGetVisitorByEmailRepositorySpy'
+import { VisitorRepositorySpy } from '../../../../shared/mocks/InMemoryRegisterVisitorRepository'
 import { AlreadyExistsVisitorError } from '../errors'
 import { RegisterNewVisitor } from '../registerNewVisitor'
-import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
 
 const makeEncryptor = (): EncryptorSpy => {
   return new EncryptorSpy()

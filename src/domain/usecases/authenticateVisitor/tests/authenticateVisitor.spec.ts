@@ -1,7 +1,7 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { EncryptorSpy } from '../../tests/encryptorSpy'
-import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
-import { TokenGeneratorRepositorySpy } from '../../tests/tokenGeneratorSpy'
+import { EncryptorSpy } from '../../../../shared/mocks/encryptorSpy'
+import { InMemoryGetVisitorByEmailRepository } from '../../../../shared/mocks/inMemoryGetVisitorByEmailRepositorySpy'
+import { TokenGeneratorRepositorySpy } from '../../../../shared/mocks/tokenGeneratorSpy'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
 

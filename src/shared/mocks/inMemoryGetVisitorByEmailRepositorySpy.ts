@@ -1,5 +1,5 @@
-import { VisitorData } from '../../entities'
-import { IGetVisitorByEmailRepository } from '../../repositories'
+import { VisitorData } from '../../domain/entities'
+import { IGetVisitorByEmailRepository } from '../../domain/repositories'
 
 export class InMemoryGetVisitorByEmailRepository implements IGetVisitorByEmailRepository {
   callsCountExists = 0
