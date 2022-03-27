@@ -1,19 +1,15 @@
 import { Either, left, right } from '../../../shared/either'
 import { InvalidParamError } from '../../../shared/errors'
 import { Hour, Name, OperatingDays } from '../../validators'
+import { Entity } from '../entity'
 import { EstablishmentData } from './establishmentData'
 
-type EstablishmentResult = Either<InvalidParamError, Establishment>
+export class Establishment extends Entity<EstablishmentData> {
+  private constructor (props: EstablishmentData) {
+    super(props)
+  }
 
-export class Establishment {
-  private constructor (
-    private readonly name: string,
-    private readonly openHour: number,
-    private readonly closedHour: number,
-    private readonly operatingDays: string[]
-  ) {}
-
-  static create (establishmentData: EstablishmentData): EstablishmentResult {
+  static create (establishmentData: EstablishmentData): Either<InvalidParamError, Establishment> {
     const { name, openHour, closedHour, operatingDays } = establishmentData
 
     const nameOrError = Name.create(name)
@@ -21,28 +17,20 @@ export class Establishment {
     const closedHourOrError = Hour.create(closedHour)
     const operatingDaysOrError = OperatingDays.create(operatingDays)
 
-    if (nameOrError.isLeft()) {
-      return left(nameOrError.value)
-    }
+    if (nameOrError.isLeft()) return left(nameOrError.value)
 
-    if (openHourOrError.isLeft()) {
-      return left(openHourOrError.value)
-    }
+    if (openHourOrError.isLeft()) return left(openHourOrError.value)
 
-    if (closedHourOrError.isLeft()) {
-      return left(closedHourOrError.value)
-    }
+    if (closedHourOrError.isLeft()) return left(closedHourOrError.value)
 
-    if (operatingDaysOrError.isLeft()) {
-      return left(operatingDaysOrError.value)
-    }
+    if (operatingDaysOrError.isLeft()) return left(operatingDaysOrError.value)
 
-    const establishment = new Establishment(
+    const establishment = new Establishment({
       name,
       openHour,
       closedHour,
       operatingDays
-    )
+    })
 
     return right(establishment)
   }

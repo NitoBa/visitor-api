@@ -1,41 +1,26 @@
 import { Either, left, right } from '../../../shared/either'
 import { InvalidParamError } from '../../../shared/errors'
 import { Email, ID, Name } from '../../validators'
+import { Entity } from '../entity'
 import { VisitorData } from './visitorData'
 
-type VisitorResult = Either<InvalidParamError, Visitor>
+export class Visitor extends Entity<VisitorData> {
+  private constructor (props: VisitorData) {
+    super(props)
+  }
 
-export class Visitor {
-  private constructor (
-    private readonly id: string,
-    private readonly name: string,
-    private readonly email: string
-  ) {}
-
-  static create (visitorData: VisitorData): VisitorResult {
-    const { id, name, email } = visitorData
+  static create (props: VisitorData): Either<InvalidParamError, Visitor> {
+    const { id, name, email } = props
     const idOrError = ID.create(id)
     const emailOrError = Email.create(email)
     const nameOrError = Name.create(name)
 
-    if (idOrError.isLeft()) {
-      return left(idOrError.value)
-    }
+    if (idOrError.isLeft()) return left(idOrError.value)
 
-    if (emailOrError.isLeft()) {
-      return left(emailOrError.value)
-    }
+    if (emailOrError.isLeft()) return left(emailOrError.value)
 
-    if (nameOrError.isLeft()) {
-      return left(nameOrError.value)
-    }
+    if (nameOrError.isLeft()) return left(nameOrError.value)
 
-    const visitor = new Visitor(
-      id,
-      name,
-      email
-    )
-
-    return right(visitor)
+    return right(new Visitor({ id, name, email }))
   }
 }
