@@ -22,4 +22,4 @@ Usecase: Authenticate visitor
 - [X] Should return an email error if the email is invalid
 - [X] Should return a password error if the password is invalid
 - [X] Should return a non-existent visitor error if the visitor is not registered
-- [ ] Must return an authentication token if the visitor is successfully authenticated
+- [X] Must return an authentication token if the visitor is successfully authenticated
