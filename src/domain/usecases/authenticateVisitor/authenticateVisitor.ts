@@ -1,6 +1,6 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
-import { IEncryptorRepository, IGetVisitorByEmailRepository } from '../../repositories'
+import { IEncryptorRepository, IGetVisitorByEmailRepository, ITokenGeneratorRepository } from '../../repositories'
 import { IAuthenticateVisitorRepository } from '../../repositories/authenticateVisitorRepository'
 import { Email, Password } from '../../valueObjects'
 import { AuthenticateVisitorData } from './authenticateVisitorData'
@@ -15,7 +15,8 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
   constructor (
     private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
     private readonly authenticateVisitorRepository: IAuthenticateVisitorRepository,
-    private readonly encryptorRepository: IEncryptorRepository
+    private readonly encryptorRepository: IEncryptorRepository,
+    private readonly tokenGeneratorRepository: ITokenGeneratorRepository
   ) {}
 
   async execute (input: AuthenticateVisitorData): Promise<AuthenticateVisitorResponse> {

@@ -3,4 +3,5 @@ export * from './authenticateVisitorRepository'
 export * from './encryptorRepository'
 export * from './getVisitorByEmailRepository'
 export * from './registerVisitorRepository'
+export * from './tokenGeneratorRepository'
 

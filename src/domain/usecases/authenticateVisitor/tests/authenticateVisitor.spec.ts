@@ -1,9 +1,20 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
+import { ITokenGeneratorRepository } from '../../../repositories'
 import { EncryptorSpy } from '../../tests/encryptorSpy'
 import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
 import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorRepository'
+
+export class TokenGeneratorRepositorySpy implements ITokenGeneratorRepository {
+  generate (email: string): string {
+    return 'token'
+  }
+}
+
+const makeTokenGenerator = (): TokenGeneratorRepositorySpy => {
+  return new TokenGeneratorRepositorySpy()
+}
 
 const makeEncryptor = (): EncryptorSpy => {
   return new EncryptorSpy()
@@ -14,17 +25,25 @@ const makeSut = (): {
   authenticateVisitorRepositorySpy: AuthenticateVisitorRepositorySpy
   getVisitorByEmailRepository: InMemoryGetVisitorByEmailRepository
   encryptorSpy: EncryptorSpy
+  tokenGeneratorSpy: TokenGeneratorRepositorySpy
 } => {
+  const tokenGeneratorSpy = makeTokenGenerator()
   const encryptorSpy = makeEncryptor()
   const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository()
 
   const authenticateVisitorRepositorySpy = new AuthenticateVisitorRepositorySpy()
-  const sut = new AuthenticateVisitor(getVisitorByEmailRepository, authenticateVisitorRepositorySpy, encryptorSpy)
+  const sut = new AuthenticateVisitor(
+    getVisitorByEmailRepository,
+    authenticateVisitorRepositorySpy,
+    encryptorSpy,
+    tokenGeneratorSpy
+  )
   return {
     sut,
     authenticateVisitorRepositorySpy,
     getVisitorByEmailRepository,
-    encryptorSpy
+    encryptorSpy,
+    tokenGeneratorSpy
   }
 }
 
