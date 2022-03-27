@@ -29,6 +29,7 @@ export class RegisterNewVisitor implements RegisterVisitor {
       getVisitorByEmailRepository,
       registerVisitorRepository
     } = this.deps
+
     const { name, email, password } = visitorRegisterData
 
     if (name.length === 0 && email.length === 0 && password.length === 0) {

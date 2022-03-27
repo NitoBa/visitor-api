@@ -29,6 +29,7 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
     } = this.deps
 
     const { email, password } = input
+
     if (email.length === 0 && password.length === 0) {
       return left(new MissingParamsError(['email', 'password']))
     }
