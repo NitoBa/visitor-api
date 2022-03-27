@@ -5,10 +5,10 @@ import { GetAllAvailableEstablishmentsByTimeResponse } from '../../domain/usecas
 import { left, right } from '../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../shared/errors'
 import { Hour } from '../../shared/validators'
-import { IGetEstablishmentsRepository } from '../repositories'
+import { IGetEstablishmentsByTimeRepository } from '../repositories'
 
 export class GetAllAvailableEstablishmentsByTime implements IGetAllAvailableEstablishmentsByTime {
-  constructor (private readonly getEstablishmentsRepository: IGetEstablishmentsRepository) {}
+  constructor (private readonly getEstablishmentsRepository: IGetEstablishmentsByTimeRepository) {}
 
   async execute (input: GetAllAvailableEstablishmentsByTimeData): Promise<GetAllAvailableEstablishmentsByTimeResponse> {
     if (input === undefined || input === null) {
