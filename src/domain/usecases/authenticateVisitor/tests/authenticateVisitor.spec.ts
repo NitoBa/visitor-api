@@ -85,16 +85,8 @@ describe('Authenticate a visitor', () => {
   it('should call Encryptor with correct parameters', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
-    const { sut, encryptorSpy } = makeSut()
-    await sut.execute({ email, password })
-    expect(encryptorSpy.callsCount).toBe(1)
-    expect(encryptorSpy.password).toBe(password)
-  })
-
-  it('should call Encryptor with correct parameters', async () => {
-    const email = 'validemail@gmail.com'
-    const password = 'Test1234.'
     const { sut, encryptorSpy, getVisitorByEmailRepository } = makeSut()
+
     await sut.execute({ email, password })
     expect(encryptorSpy.callsCount).toBe(1)
     expect(encryptorSpy.password).toBe(password)
