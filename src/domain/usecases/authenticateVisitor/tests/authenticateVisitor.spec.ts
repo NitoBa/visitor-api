@@ -39,7 +39,6 @@ const makeSut = (): {
   const authenticateVisitorRepositorySpy = new AuthenticateVisitorRepositorySpy()
   const sut = new AuthenticateVisitor(
     getVisitorByEmailRepository,
-    authenticateVisitorRepositorySpy,
     encryptorSpy,
     tokenGeneratorSpy
   )
