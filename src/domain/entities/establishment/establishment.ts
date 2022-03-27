@@ -37,12 +37,13 @@ export class Establishment {
       return left(operatingDaysOrError.value)
     }
 
-    return right(
-      new Establishment(
-        nameOrError.value,
-        openHourOrError.value,
-        closedHourOrError.value,
-        operatingDaysOrError.value
-      ))
+    const establishment = new Establishment(
+      nameOrError.value,
+      openHourOrError.value,
+      closedHourOrError.value,
+      operatingDaysOrError.value
+    )
+
+    return right(establishment)
   }
 }
