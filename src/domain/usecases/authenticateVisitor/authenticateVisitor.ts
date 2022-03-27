@@ -51,7 +51,7 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
 
     const accessToken = tokenGeneratorRepository.generate(isVisitorExistents.id)
 
-    await updateAccessTokenRepository.update(accessToken)
+    await updateAccessTokenRepository.update({ accessToken, userId: isVisitorExistents.id })
 
     return right(accessToken)
   }

@@ -7,9 +7,11 @@ import { VisitorNotRegistered } from '../errors'
 class UpdateAccessTokenRepositorySpy implements IUpdateAccessTokenRepository {
   callsCount = 0
   accessToken?: string
-  async update (accessToken: string): Promise<void> {
+  userId?: string
+  async update (input: { accessToken: string, userId: string }): Promise<void> {
     this.callsCount++
-    this.accessToken = accessToken
+    this.accessToken = input.accessToken
+    this.userId = input.userId
   }
 }
 
@@ -139,13 +141,15 @@ describe('Authenticate a visitor', () => {
   it('should call updateAccessTokenRepository with correct parameters', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
-    const { sut, updateAccessTokenRepositorySpy, tokenGeneratorSpy } = makeSut()
+    const { sut, updateAccessTokenRepositorySpy, tokenGeneratorSpy, getVisitorByEmailRepository } = makeSut()
     await sut.execute({ email, password })
 
     const accessToken = tokenGeneratorSpy.generatedToken
+    const userId = getVisitorByEmailRepository.visitor.id
 
     expect(updateAccessTokenRepositorySpy.callsCount).toBe(1)
     expect(updateAccessTokenRepositorySpy.accessToken).toBe(accessToken)
+    expect(updateAccessTokenRepositorySpy.userId).toBe(userId)
   })
 
   it('should return an access token if visitor was authenticate with success', async () => {
