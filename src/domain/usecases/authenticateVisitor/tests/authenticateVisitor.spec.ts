@@ -12,6 +12,7 @@ class UpdateAccessTokenRepositorySpy implements IUpdateAccessTokenRepository {
     this.callsCount++
     this.accessToken = input.accessToken
     this.userId = input.userId
+    return undefined
   }
 }
 
@@ -150,6 +151,18 @@ describe('Authenticate a visitor', () => {
     expect(updateAccessTokenRepositorySpy.callsCount).toBe(1)
     expect(updateAccessTokenRepositorySpy.accessToken).toBe(accessToken)
     expect(updateAccessTokenRepositorySpy.userId).toBe(userId)
+  })
+
+  it('should not throw an error updateAccessTokenRepository update was called', async () => {
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, updateAccessTokenRepositorySpy, tokenGeneratorSpy, getVisitorByEmailRepository } = makeSut()
+    await sut.execute({ email, password })
+
+    const accessToken = tokenGeneratorSpy.generatedToken
+    const userId = getVisitorByEmailRepository.visitor.id
+
+    expect(await updateAccessTokenRepositorySpy.update({ accessToken, userId })).toBeUndefined()
   })
 
   it('should return an access token if visitor was authenticate with success', async () => {
