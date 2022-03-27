@@ -22,7 +22,7 @@ export class InMemoryGetVisitorByEmailRepository implements IGetVisitorByEmailRe
     if (this.existsVisitor) {
       this.visitor = {
         name: 'valid_name',
-        email: '',
+        email: email,
         password: ''
       }
       return this.visitor
