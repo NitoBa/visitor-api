@@ -36,13 +36,13 @@ export class Visitor {
       return left(passwordOrError.value)
     }
 
-    return right(
-      new Visitor(
-        idOrError.value,
-        nameOrError.value,
-        emailOrError.value,
-        passwordOrError.value
-      )
+    const visitor = new Visitor(
+      idOrError.value,
+      nameOrError.value,
+      emailOrError.value,
+      passwordOrError.value
     )
+
+    return right(visitor)
   }
 }
