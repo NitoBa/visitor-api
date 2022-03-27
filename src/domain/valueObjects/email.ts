@@ -1,6 +1,6 @@
 
 import { Either, left, right } from '../../shared/either'
-import { InvalidParamError } from '../errors'
+import { InvalidParamError } from '../../shared/errors'
 
 export class Email {
   private constructor (private readonly email: string) {}

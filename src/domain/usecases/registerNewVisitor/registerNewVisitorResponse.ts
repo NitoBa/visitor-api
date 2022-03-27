@@ -1,6 +1,6 @@
 import { Either } from '../../../shared/either'
-import { InvalidParamError } from '../../errors'
-import { AlreadyExistsVisitorError, MissingParamsError } from './errors'
+import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
+import { AlreadyExistsVisitorError } from './errors'
 
 type VisitorRegisterErrors = MissingParamsError | InvalidParamError | AlreadyExistsVisitorError
 

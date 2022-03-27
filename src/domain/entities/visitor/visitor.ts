@@ -1,5 +1,5 @@
 import { Either, left, right } from '../../../shared/either'
-import { InvalidParamError } from '../../errors'
+import { InvalidParamError } from '../../../shared/errors'
 import { Email, Name } from '../../valueObjects'
 import { VisitorData } from './visitorData'
 

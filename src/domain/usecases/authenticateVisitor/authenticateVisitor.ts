@@ -1,5 +1,5 @@
 import { left, right } from '../../../shared/either'
-import { InvalidParamError, MissingParamsError } from '../../errors'
+import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
 import { IAuthenticateVisitorRepository } from '../../repositories/authenticateVisitorRepository'
 import { Email, Password } from '../../valueObjects'
 import { AuthenticateVisitorData } from './authenticateVisitorData'

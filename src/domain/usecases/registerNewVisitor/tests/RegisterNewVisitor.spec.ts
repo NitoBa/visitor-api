@@ -1,4 +1,4 @@
-import { InvalidParamError, MissingParamsError } from '../../../errors'
+import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
 import { AlreadyExistsVisitorError } from '../errors'
 import { RegisterNewVisitor } from '../registerNewVisitor'
 import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
