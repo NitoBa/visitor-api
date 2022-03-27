@@ -1,6 +1,6 @@
 import { Either, left, right } from '../../../shared/either'
 import { InvalidParamError } from '../../../shared/errors'
-import { Email, ID, Name } from '../../validators'
+import { Email, ID, Name, Password } from '../../../shared/validators'
 import { Entity } from '../entity'
 import { VisitorData } from './visitorData'
 
@@ -10,10 +10,11 @@ export class Visitor extends Entity<VisitorData> {
   }
 
   static create (props: VisitorData): Either<InvalidParamError, Visitor> {
-    const { id, name, email } = props
+    const { id, name, email, password } = props
     const idOrError = ID.create(id)
     const emailOrError = Email.create(email)
     const nameOrError = Name.create(name)
+    const passwordOrError = Password.create(password)
 
     if (idOrError.isLeft()) return left(idOrError.value)
 
@@ -21,6 +22,8 @@ export class Visitor extends Entity<VisitorData> {
 
     if (nameOrError.isLeft()) return left(nameOrError.value)
 
-    return right(new Visitor({ id, name, email }))
+    if (passwordOrError.isLeft()) return left(passwordOrError.value)
+
+    return right(new Visitor({ id, name, email, password }))
   }
 }

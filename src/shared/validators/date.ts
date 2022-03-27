@@ -1,5 +1,5 @@
-import { Either, left, right } from '../../shared/either'
-import { InvalidParamError } from '../../shared/errors'
+import { Either, left, right } from '../either'
+import { InvalidParamError } from '../errors'
 
 export class DateObject {
   private constructor (public readonly date: string) {}

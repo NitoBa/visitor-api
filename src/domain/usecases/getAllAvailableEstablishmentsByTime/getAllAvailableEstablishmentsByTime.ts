@@ -1,8 +1,8 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
+import { Hour } from '../../../shared/validators'
 import { Establishment } from '../../entities'
 import { IGetEstablishmentsRepository } from '../../repositories'
-import { Hour } from '../../validators'
 import { GetAllAvailableEstablishmentsByTimeData } from './getAllAvailableEstablishmentsByTimeData'
 import { GetAllAvailableEstablishmentsByTimeResponse } from './getAllAvailableEstablishmentsByTimeResponse'
 export interface IGetAllAvailableEstablishmentsByTime {

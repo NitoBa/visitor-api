@@ -1,4 +1,4 @@
-import { InvalidParamError } from '../../../shared/errors'
+import { InvalidParamError } from '../../errors'
 import { Password } from '../password'
 
 describe('Password Validator', () => {

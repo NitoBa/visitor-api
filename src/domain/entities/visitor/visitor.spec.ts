@@ -7,7 +7,8 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'nameValid',
       email: 'invalidEmail',
-      id: randomUUID()
+      id: randomUUID(),
+      password: 'Test1234.'
     })
 
     expect(sut.isLeft()).toBeTruthy()
@@ -18,7 +19,8 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'nameValid',
       email: 'invalidEmail',
-      id: 'invalidId'
+      id: 'invalidId',
+      password: 'Test1234.'
     })
 
     expect(sut.isLeft()).toBeTruthy()
@@ -29,7 +31,8 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'nameValid',
       email: '',
-      id: randomUUID()
+      id: randomUUID(),
+      password: 'Test1234.'
     })
 
     expect(sut.isLeft()).toBeTruthy()
@@ -40,8 +43,8 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'not_valid_name',
       email: 'validemail@gmail.com',
-      id: randomUUID()
-
+      id: randomUUID(),
+      password: 'Test1234.'
     })
 
     expect(sut.isLeft()).toBeTruthy()
@@ -52,7 +55,8 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'validName',
       email: 'validemail@gmail.com',
-      id: randomUUID()
+      id: randomUUID(),
+      password: 'Test1234.'
     })
 
     expect(sut.isRight()).toBeTruthy()

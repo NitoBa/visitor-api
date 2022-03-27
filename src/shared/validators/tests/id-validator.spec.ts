@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { InvalidParamError } from '../../../shared/errors'
+import { InvalidParamError } from '../../errors'
 import { ID } from '../id'
 
 describe('ID Validator', () => {

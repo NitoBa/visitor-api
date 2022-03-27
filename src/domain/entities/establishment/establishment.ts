@@ -1,6 +1,6 @@
 import { Either, left, right } from '../../../shared/either'
 import { InvalidParamError } from '../../../shared/errors'
-import { Hour, Name, OperatingDays } from '../../validators'
+import { Hour, Name, OperatingDays } from '../../../shared/validators'
 import { Entity } from '../entity'
 import { EstablishmentData } from './establishmentData'
 
