@@ -27,10 +27,10 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
     if (!Email.validate(email)) return left(new InvalidParamError(email))
     if (!Password.validate(password)) return left(new InvalidParamError(password))
 
-    const isExists = await this.getVisitorByEmailRepository.getByEmail(email)
-    if (isExists === null || isExists === undefined) return left(new VisitorNotRegistered())
+    const isVisitorExistents = await this.getVisitorByEmailRepository.getByEmail(email)
+    if (isVisitorExistents === null || isVisitorExistents === undefined) return left(new VisitorNotRegistered())
 
-    if (!this.encryptorRepository.compare(password, isExists.password)) return left(new InvalidParamError(password))
+    if (!this.encryptorRepository.compare(password, isVisitorExistents.password)) return left(new InvalidParamError(password))
 
     return right(undefined)
   }
