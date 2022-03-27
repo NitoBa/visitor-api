@@ -1,6 +1,6 @@
-import { IGetEstablishmentsRepository } from '../../../../data/repositories'
-import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { Establishment, EstablishmentData } from '../../../entities'
+import { Establishment, EstablishmentData } from '../../../domain/entities'
+import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
+import { IGetEstablishmentsRepository } from '../../repositories'
 import { GetAllAvailableEstablishmentsByTime } from '../getAllAvailableEstablishmentsByTime'
 
 export class GetEstablishmentsRepositorySpy implements IGetEstablishmentsRepository {
