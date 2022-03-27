@@ -1,6 +1,6 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
-import { IEncryptorRepository, IGetVisitorByEmailRepository, ITokenGeneratorRepository } from '../../repositories'
+import { IEncryptorRepository, IGetVisitorByEmailRepository, ITokenGeneratorRepository, IUpdateAccessTokenRepository } from '../../repositories'
 import { Email, Password } from '../../valueObjects'
 import { AuthenticateVisitorData } from './authenticateVisitorData'
 import { AuthenticateVisitorResponse } from './authenticateVisitorResponse'
@@ -14,6 +14,7 @@ export interface AuthenticateVisitorDeps {
   getVisitorByEmailRepository: IGetVisitorByEmailRepository
   encryptorRepository: IEncryptorRepository
   tokenGeneratorRepository: ITokenGeneratorRepository
+  updateAccessTokenRepository: IUpdateAccessTokenRepository
 }
 
 export class AuthenticateVisitor implements IAuthenticateVisitor {
@@ -25,7 +26,8 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
     const {
       getVisitorByEmailRepository,
       encryptorRepository,
-      tokenGeneratorRepository
+      tokenGeneratorRepository,
+      updateAccessTokenRepository
     } = this.deps
 
     const { email, password } = input
@@ -47,6 +49,10 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
       return left(new InvalidParamError(password))
     }
 
-    return right(tokenGeneratorRepository.generate(isVisitorExistents.id))
+    const accessToken = tokenGeneratorRepository.generate(isVisitorExistents.id)
+
+    await updateAccessTokenRepository.update(accessToken)
+
+    return right(accessToken)
   }
 }

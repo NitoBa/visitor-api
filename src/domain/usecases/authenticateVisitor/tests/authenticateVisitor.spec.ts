@@ -1,7 +1,21 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
 import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, TokenGeneratorRepositorySpy } from '../../../../shared/mocks'
+import { IUpdateAccessTokenRepository } from '../../../repositories'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
+
+class UpdateAccessTokenRepositorySpy implements IUpdateAccessTokenRepository {
+  callsCount = 0
+  accessToken?: string
+  async update (accessToken: string): Promise<void> {
+    this.callsCount++
+    this.accessToken = accessToken
+  }
+}
+
+const makeUpdateAccessToken = (): UpdateAccessTokenRepositorySpy => {
+  return new UpdateAccessTokenRepositorySpy()
+}
 
 const makeTokenGenerator = (): TokenGeneratorRepositorySpy => {
   return new TokenGeneratorRepositorySpy()
@@ -16,7 +30,9 @@ const makeSut = (): {
   getVisitorByEmailRepository: InMemoryGetVisitorByEmailRepository
   encryptorSpy: EncryptorSpy
   tokenGeneratorSpy: TokenGeneratorRepositorySpy
+  updateAccessTokenRepositorySpy: UpdateAccessTokenRepositorySpy
 } => {
+  const updateAccessTokenRepositorySpy = makeUpdateAccessToken()
   const tokenGeneratorSpy = makeTokenGenerator()
   const encryptorSpy = makeEncryptor()
   const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository()
@@ -24,13 +40,15 @@ const makeSut = (): {
   const sut = new AuthenticateVisitor({
     getVisitorByEmailRepository,
     encryptorRepository: encryptorSpy,
-    tokenGeneratorRepository: tokenGeneratorSpy
+    tokenGeneratorRepository: tokenGeneratorSpy,
+    updateAccessTokenRepository: updateAccessTokenRepositorySpy
   })
   return {
     sut,
     getVisitorByEmailRepository,
     encryptorSpy,
-    tokenGeneratorSpy
+    tokenGeneratorSpy,
+    updateAccessTokenRepositorySpy
   }
 }
 
@@ -116,6 +134,18 @@ describe('Authenticate a visitor', () => {
     await sut.execute({ email, password })
     expect(tokenGeneratorSpy.callsCount).toBe(1)
     expect(tokenGeneratorSpy.id).toBe(getVisitorByEmailRepository.visitor.id)
+  })
+
+  it('should call updateAccessTokenRepository with correct parameters', async () => {
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, updateAccessTokenRepositorySpy, tokenGeneratorSpy } = makeSut()
+    await sut.execute({ email, password })
+
+    const accessToken = tokenGeneratorSpy.generatedToken
+
+    expect(updateAccessTokenRepositorySpy.callsCount).toBe(1)
+    expect(updateAccessTokenRepositorySpy.accessToken).toBe(accessToken)
   })
 
   it('should return an access token if visitor was authenticate with success', async () => {
