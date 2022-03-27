@@ -83,9 +83,9 @@ describe('Get All Available Establishments By Time', () => {
     const openHour = 12
     const closedHour = 18
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       getEstablishmentsRepositorySpy.establishments.push({
-        name: `Establishment ${i}`,
+        name: 'Establishment',
         openHour: openHour,
         closedHour: closedHour,
         operatingDays: ['Monday', 'Tuesday']
@@ -93,6 +93,6 @@ describe('Get All Available Establishments By Time', () => {
     }
     const result = await sut.execute({ openHour, closedHour })
     expect(result.isRight).toBeTruthy()
-    expect(result.value).toEqual(getEstablishmentsRepositorySpy.establishments)
+    expect(result.value).toHaveLength(getEstablishmentsRepositorySpy.establishments.length)
   })
 })

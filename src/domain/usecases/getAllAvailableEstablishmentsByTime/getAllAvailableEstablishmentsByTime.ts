@@ -1,5 +1,6 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
+import { Establishment } from '../../entities'
 import { IGetEstablishmentsRepository } from '../../repositories'
 import { Hour } from '../../validators'
 import { GetAllAvailableEstablishmentsByTimeData } from './getAllAvailableEstablishmentsByTimeData'
@@ -22,6 +23,8 @@ export class GetAllAvailableEstablishmentsByTime implements IGetAllAvailableEsta
 
     const establishmentsResult = await this.getEstablishmentsRepository.getAllByTime({ openHour, closedHour })
 
-    return right(establishmentsResult)
+    const data = establishmentsResult.map(establishment => Establishment.create(establishment).value as Establishment)
+
+    return right(data)
   }
 }
