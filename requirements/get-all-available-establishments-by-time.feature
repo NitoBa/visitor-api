@@ -26,5 +26,5 @@ OutputData: List of Establishments or empty list
 
 - [X] Should return invalid parameter error if start time is invalid
 - [X] Should return invalid parameter error if end time is invalid
-- [ ] Should return an empty list if there is no establishment available within the specified time
-- [ ] Must return a list with the establishments available within the informed time
+- [X] Should return an empty list if there is no establishment available within the specified time
+- [X] Must return a list with the establishments available within the informed time
