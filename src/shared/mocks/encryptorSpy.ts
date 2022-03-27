@@ -1,4 +1,4 @@
-import { IEncryptorRepository } from '../../data/repositories'
+import { IEncryptorRepository } from '@/data/repositories'
 
 export class EncryptorSpy implements IEncryptorRepository {
   callsCount = 0

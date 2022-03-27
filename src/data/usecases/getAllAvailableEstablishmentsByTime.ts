@@ -1,11 +1,10 @@
-import { Establishment } from '../../domain/entities'
-import { IGetAllAvailableEstablishmentsByTime } from '../../domain/usecases/getAllAvailableEstablishmentsByTime/getAllAvailableEstablishmentsByTime'
-import { GetAllAvailableEstablishmentsByTimeData } from '../../domain/usecases/getAllAvailableEstablishmentsByTime/getAllAvailableEstablishmentsByTimeData'
-import { GetAllAvailableEstablishmentsByTimeResponse } from '../../domain/usecases/getAllAvailableEstablishmentsByTime/getAllAvailableEstablishmentsByTimeResponse'
-import { left, right } from '../../shared/either'
-import { InvalidParamError, MissingParamsError } from '../../shared/errors'
-import { Hour } from '../../shared/validators'
-import { IGetEstablishmentsByTimeRepository } from '../repositories'
+import { IGetEstablishmentsByTimeRepository } from '@/data/repositories'
+import { Establishment } from '@/domain/entities'
+import { IGetAllAvailableEstablishmentsByTime } from '@/domain/usecases'
+import { GetAllAvailableEstablishmentsByTimeData, GetAllAvailableEstablishmentsByTimeResponse } from '@/domain/usecases/'
+import { left, right } from '@/shared/either'
+import { InvalidParamError, MissingParamsError } from '@/shared/errors'
+import { Hour } from '@/shared/validators'
 
 export class GetAllAvailableEstablishmentsByTime implements IGetAllAvailableEstablishmentsByTime {
   constructor (private readonly getEstablishmentsRepository: IGetEstablishmentsByTimeRepository) {}

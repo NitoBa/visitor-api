@@ -1,4 +1,4 @@
-import { IRegisterVisitorRepository } from '../../data/repositories/registerVisitorRepository'
+import { IRegisterVisitorRepository } from '@/data/repositories'
 
 export class VisitorRepositorySpy implements IRegisterVisitorRepository {
   email?: string

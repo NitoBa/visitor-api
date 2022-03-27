@@ -1,5 +1,5 @@
+import { InvalidParamError } from '@/shared/errors'
 import { randomUUID } from 'crypto'
-import { InvalidParamError } from '../../../shared/errors'
 import { Visitor } from './visitor'
 
 describe('Visitor Domain Entity', () => {

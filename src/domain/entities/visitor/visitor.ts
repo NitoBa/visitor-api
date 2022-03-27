@@ -1,6 +1,6 @@
-import { Either, left, right } from '../../../shared/either'
-import { InvalidParamError } from '../../../shared/errors'
-import { Email, ID, Name, Password } from '../../../shared/validators'
+import { Either, left, right } from '@/shared/either'
+import { InvalidParamError } from '@/shared/errors'
+import { Email, ID, Name, Password } from '@/shared/validators'
 import { Entity } from '../entity'
 import { VisitorData } from './visitorData'
 

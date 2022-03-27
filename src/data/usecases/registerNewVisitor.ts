@@ -1,10 +1,9 @@
-import { RegisterVisitor } from '../../domain/usecases'
-import { AlreadyExistsVisitorError } from '../../domain/usecases/registerNewVisitor/errors'
-import { RegisterNewVisitorResponse } from '../../domain/usecases/registerNewVisitor/registerNewVisitorResponse'
-import { VisitorRegisterData } from '../../domain/usecases/registerNewVisitor/visitorRegisterData'
-import { left, right } from '../../shared/either'
-import { InvalidParamError, MissingParamsError } from '../../shared/errors'
-import { Email, Name, Password } from '../../shared/validators'
+
+import { RegisterNewVisitorResponse, RegisterVisitor, VisitorRegisterData } from '@/domain/usecases'
+import { AlreadyExistsVisitorError } from '@/domain/usecases/registerNewVisitor/errors'
+import { left, right } from '@/shared/either'
+import { InvalidParamError, MissingParamsError } from '@/shared/errors'
+import { Email, Name, Password } from '@/shared/validators'
 import { IEncryptorRepository, IGetVisitorByEmailRepository, IRegisterVisitorRepository } from '../repositories'
 
 export interface RegisterVisitorDeps {

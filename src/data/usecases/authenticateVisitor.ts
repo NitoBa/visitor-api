@@ -1,10 +1,10 @@
-import { IAuthenticateVisitor } from '../../domain/usecases/authenticateVisitor/authenticateVisitor'
-import { AuthenticateVisitorData } from '../../domain/usecases/authenticateVisitor/authenticateVisitorData'
-import { AuthenticateVisitorResponse } from '../../domain/usecases/authenticateVisitor/authenticateVisitorResponse'
-import { VisitorNotRegistered } from '../../domain/usecases/authenticateVisitor/errors'
-import { left, right } from '../../shared/either'
-import { InvalidParamError, MissingParamsError } from '../../shared/errors'
-import { Email, Password } from '../../shared/validators'
+import { IAuthenticateVisitor } from '@/domain/usecases'
+import { AuthenticateVisitorData } from '@/domain/usecases/authenticateVisitor/authenticateVisitorData'
+import { AuthenticateVisitorResponse } from '@/domain/usecases/authenticateVisitor/authenticateVisitorResponse'
+import { VisitorNotRegistered } from '@/domain/usecases/authenticateVisitor/errors'
+import { left, right } from '@/shared/either'
+import { InvalidParamError, MissingParamsError } from '@/shared/errors'
+import { Email, Password } from '@/shared/validators'
 import { IEncryptorRepository, IGetVisitorByEmailRepository, ITokenGeneratorRepository, IUpdateAccessTokenRepository } from '../repositories'
 
 export interface AuthenticateVisitorDeps {

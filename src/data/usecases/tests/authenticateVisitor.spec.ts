@@ -1,6 +1,6 @@
-import { VisitorNotRegistered } from '../../../domain/usecases/authenticateVisitor/errors'
-import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
-import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, TokenGeneratorRepositorySpy, UpdateAccessTokenRepositorySpy } from '../../../shared/mocks'
+import { VisitorNotRegistered } from '@/domain/usecases/authenticateVisitor/errors'
+import { InvalidParamError, MissingParamsError } from '@/shared/errors'
+import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, TokenGeneratorRepositorySpy, UpdateAccessTokenRepositorySpy } from '@/shared/mocks'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 
 const makeUpdateAccessToken = (): UpdateAccessTokenRepositorySpy => {

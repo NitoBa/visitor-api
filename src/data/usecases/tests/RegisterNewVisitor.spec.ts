@@ -1,6 +1,6 @@
-import { AlreadyExistsVisitorError } from '../../../domain/usecases/registerNewVisitor/errors'
-import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
-import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, VisitorRepositorySpy } from '../../../shared/mocks'
+import { AlreadyExistsVisitorError } from '@/domain/usecases/registerNewVisitor/errors'
+import { InvalidParamError, MissingParamsError } from '@/shared/errors'
+import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, VisitorRepositorySpy } from '@/shared/mocks'
 import { RegisterNewVisitor } from '../registerNewVisitor'
 
 const makeEncryptor = (): EncryptorSpy => {
