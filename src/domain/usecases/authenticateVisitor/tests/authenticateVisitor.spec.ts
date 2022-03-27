@@ -7,7 +7,11 @@ import { VisitorNotRegistered } from '../errors'
 import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorRepository'
 
 export class TokenGeneratorRepositorySpy implements ITokenGeneratorRepository {
+  callsCount = 0
+  email = 'email'
   generate (email: string): string {
+    this.callsCount++
+    this.email = email
     return 'token'
   }
 }
@@ -120,6 +124,15 @@ describe('Authenticate a visitor', () => {
     const result = await sut.execute({ email, password })
     expect(result.isLeft).toBeTruthy()
     expect(result.value).toEqual(new InvalidParamError(password))
+  })
+
+  it('should call token generator with correct parameters', async () => {
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, tokenGeneratorSpy } = makeSut()
+    await sut.execute({ email, password })
+    expect(tokenGeneratorSpy.callsCount).toBe(1)
+    expect(tokenGeneratorSpy.email).toBe(email)
   })
 
 //   it('should return a access token if visitor was authenticate with success', async () => {
