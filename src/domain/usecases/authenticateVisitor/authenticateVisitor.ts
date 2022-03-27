@@ -6,6 +6,7 @@ import { Email, Password } from '../../valueObjects'
 import { AuthenticateVisitorData } from './authenticateVisitorData'
 import { AuthenticateVisitorResponse } from './authenticateVisitorResponse'
 import { VisitorNotRegistered } from './errors'
+import { Encryptor } from './tests/authenticateVisitor.spec'
 
 interface IAuthenticateVisitor {
   execute: (params: AuthenticateVisitorData) => Promise<AuthenticateVisitorResponse>
@@ -14,7 +15,8 @@ interface IAuthenticateVisitor {
 export class AuthenticateVisitor implements IAuthenticateVisitor {
   constructor (
     private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
-    private readonly authenticateVisitorRepository: IAuthenticateVisitorRepository
+    private readonly authenticateVisitorRepository: IAuthenticateVisitorRepository,
+    private readonly encryptor: Encryptor
   ) {}
 
   async execute (input: AuthenticateVisitorData): Promise<AuthenticateVisitorResponse> {
@@ -28,6 +30,9 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
 
     const isExists = await this.getVisitorByEmailRepository.getByEmail(email)
     if (isExists === null || isExists === undefined) return left(new VisitorNotRegistered())
+
+    this.encryptor.compare(password, isExists.password)
+
     return right(undefined)
   }
 }

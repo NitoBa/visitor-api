@@ -4,16 +4,45 @@ import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
 import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorRepository'
 
+export interface Encryptor {
+  encrypt: (value: string) => string
+  compare: (value: string, hash: string) => boolean
+}
+class EncryptorSpy implements Encryptor {
+  callsCount = 0
+  password = 'password'
+  encrypt (value: string): string {
+    return ''
+  }
+
+  compare (value: string, hash: string): boolean {
+    this.callsCount++
+    this.password = value
+    return true
+  }
+}
+
+const makeEncryptor = (): EncryptorSpy => {
+  return new EncryptorSpy()
+}
+
 const makeSut = (): {
   sut: AuthenticateVisitor
   authenticateVisitorRepositorySpy: AuthenticateVisitorRepositorySpy
   getVisitorByEmailRepository: InMemoryGetVisitorByEmailRepository
+  encryptorSpy: EncryptorSpy
 } => {
+  const encryptorSpy = makeEncryptor()
   const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository()
 
   const authenticateVisitorRepositorySpy = new AuthenticateVisitorRepositorySpy()
-  const sut = new AuthenticateVisitor(getVisitorByEmailRepository, authenticateVisitorRepositorySpy)
-  return { sut, authenticateVisitorRepositorySpy, getVisitorByEmailRepository }
+  const sut = new AuthenticateVisitor(getVisitorByEmailRepository, authenticateVisitorRepositorySpy, encryptorSpy)
+  return {
+    sut,
+    authenticateVisitorRepositorySpy,
+    getVisitorByEmailRepository,
+    encryptorSpy
+  }
 }
 
 describe('Authenticate a visitor', () => {
@@ -68,6 +97,15 @@ describe('Authenticate a visitor', () => {
     const result = await sut.execute({ email, password })
     expect(result.isLeft).toBeTruthy()
     expect(result.value).toEqual(new VisitorNotRegistered())
+  })
+
+  it('should call Encryptor with correct parameters', async () => {
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, encryptorSpy } = makeSut()
+    await sut.execute({ email, password })
+    expect(encryptorSpy.callsCount).toBe(1)
+    expect(encryptorSpy.password).toBe(password)
   })
 
 //   it('should return a access token if visitor was authenticate with success', async () => {
