@@ -10,7 +10,7 @@ export class AuthenticateVisitorRepositorySpy implements IAuthenticateVisitorRep
     return this.existsVisitor
   }
 
-  async authenticate (email: string, password: string): Promise<void> {
+  async authenticate (input: { email: string, password: string }): Promise<void> {
 
   }
 }
