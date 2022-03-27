@@ -1,5 +1,5 @@
-import { InvalidParamError } from '../../../errors'
-import { AlreadyExistsVisitorError, MissingParamsError } from '../errors'
+import { InvalidParamError, MissingParamsError } from '../../../errors'
+import { AlreadyExistsVisitorError } from '../errors'
 import { RegisterNewVisitor } from '../registerNewVisitor'
 import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
 

@@ -1,4 +1,4 @@
-import { DomainError } from '../../../errors/domainError'
+import { DomainError } from './domainError'
 
 export class MissingParamsError extends Error implements DomainError {
   constructor (public readonly params: string[]) {
