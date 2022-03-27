@@ -1,7 +1,5 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { EncryptorSpy } from '../../../../shared/mocks/encryptorSpy'
-import { InMemoryGetVisitorByEmailRepository } from '../../../../shared/mocks/inMemoryGetVisitorByEmailRepositorySpy'
-import { VisitorRepositorySpy } from '../../../../shared/mocks/InMemoryRegisterVisitorRepository'
+import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, VisitorRepositorySpy } from '../../../../shared/mocks'
 import { AlreadyExistsVisitorError } from '../errors'
 import { RegisterNewVisitor } from '../registerNewVisitor'
 
