@@ -1,5 +1,5 @@
 import { Either } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
-import { Establishment } from '../../entities'
+import { EstablishmentData } from '../../entities'
 
-export type GetAllAvailableEstablishmentsByTimeResponse = Either<MissingParamsError | InvalidParamError, Establishment[]>
+export type GetAllAvailableEstablishmentsByTimeResponse = Either<MissingParamsError | InvalidParamError, EstablishmentData[]>

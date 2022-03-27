@@ -1,5 +1,5 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { EstablishmentData } from '../../../entities'
+import { Establishment, EstablishmentData } from '../../../entities'
 import { IGetEstablishmentsRepository } from '../../../repositories'
 import { GetAllAvailableEstablishmentsByTime } from '../getAllAvailableEstablishmentsByTime'
 
@@ -7,11 +7,12 @@ export class GetEstablishmentsRepositorySpy implements IGetEstablishmentsReposit
   callsCount = 0
   openHour = 0
   closedHour = 0
+  establishments: EstablishmentData[] = []
   async getAllByTime (input: { openHour: number, closedHour: number }): Promise<EstablishmentData[]> {
     this.callsCount++
     this.openHour = input.openHour
     this.closedHour = input.closedHour
-    return []
+    return this.establishments
   }
 }
 
@@ -68,15 +69,30 @@ describe('Get All Available Establishments By Time', () => {
     expect(getEstablishmentsRepositorySpy.closedHour).toBe(closedHour)
   })
 
-  //   it('should return an empty list if open hour and closed not match', async () => {
-  //     const { sut } = makeSut()
-  //     const openHour = 12
-  //     const closedHour = 18
-  //     const result = await sut.execute({ openHour, closedHour })
-  //     expect(result.isRight).toBeTruthy()
-  //     expect(result.value).toEqual(new Array<Establishment>())
-  //   })
-  //   it('should return an error if end time is invalid', () => {
+  it('should return an empty list if open hour and closed not matched', async () => {
+    const { sut } = makeSut()
+    const openHour = 12
+    const closedHour = 18
+    const result = await sut.execute({ openHour, closedHour })
+    expect(result.isRight).toBeTruthy()
+    expect(result.value).toEqual(new Array<Establishment>())
+  })
 
-//   })
+  it('should return an list if open hour and closed matched', async () => {
+    const { sut, getEstablishmentsRepositorySpy } = makeSut()
+    const openHour = 12
+    const closedHour = 18
+
+    for (let i = 0; i < 10; i++) {
+      getEstablishmentsRepositorySpy.establishments.push({
+        name: `Establishment ${i}`,
+        openHour: openHour,
+        closedHour: closedHour,
+        operatingDays: ['Monday', 'Tuesday']
+      })
+    }
+    const result = await sut.execute({ openHour, closedHour })
+    expect(result.isRight).toBeTruthy()
+    expect(result.value).toEqual(getEstablishmentsRepositorySpy.establishments)
+  })
 })
