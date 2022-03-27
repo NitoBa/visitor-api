@@ -1,20 +1,7 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, TokenGeneratorRepositorySpy } from '../../../../shared/mocks'
-import { IUpdateAccessTokenRepository } from '../../../repositories'
+import { EncryptorSpy, InMemoryGetVisitorByEmailRepository, TokenGeneratorRepositorySpy, UpdateAccessTokenRepositorySpy } from '../../../../shared/mocks'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
-
-class UpdateAccessTokenRepositorySpy implements IUpdateAccessTokenRepository {
-  callsCount = 0
-  accessToken?: string
-  userId?: string
-  async update (input: { accessToken: string, userId: string }): Promise<void> {
-    this.callsCount++
-    this.accessToken = input.accessToken
-    this.userId = input.userId
-    return undefined
-  }
-}
 
 const makeUpdateAccessToken = (): UpdateAccessTokenRepositorySpy => {
   return new UpdateAccessTokenRepositorySpy()

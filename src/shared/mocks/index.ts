@@ -3,4 +3,5 @@ export * from './encryptorSpy'
 export * from './inMemoryGetVisitorByEmailRepositorySpy'
 export * from './InMemoryRegisterVisitorRepository'
 export * from './tokenGeneratorSpy'
+export * from './updateAccessTokenRepositorySpy'
 
