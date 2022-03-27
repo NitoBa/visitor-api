@@ -1,21 +1,10 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { ITokenGeneratorRepository } from '../../../repositories'
 import { EncryptorSpy } from '../../tests/encryptorSpy'
 import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
+import { TokenGeneratorRepositorySpy } from '../../tests/tokenGeneratorSpy'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
 import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorRepository'
-
-export class TokenGeneratorRepositorySpy implements ITokenGeneratorRepository {
-  callsCount = 0
-  email = 'email'
-  generatedToken = 'generatedToken'
-  generate (email: string): string {
-    this.callsCount++
-    this.email = email
-    return this.generatedToken
-  }
-}
 
 const makeTokenGenerator = (): TokenGeneratorRepositorySpy => {
   return new TokenGeneratorRepositorySpy()
