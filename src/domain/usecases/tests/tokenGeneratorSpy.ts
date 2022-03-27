@@ -2,11 +2,11 @@ import { ITokenGeneratorRepository } from '../../repositories'
 
 export class TokenGeneratorRepositorySpy implements ITokenGeneratorRepository {
   callsCount = 0
-  email = 'email'
+  id = 'email'
   generatedToken = 'generatedToken'
-  generate (email: string): string {
+  generate (id: string): string {
     this.callsCount++
-    this.email = email
+    this.id = id
     return this.generatedToken
   }
 }

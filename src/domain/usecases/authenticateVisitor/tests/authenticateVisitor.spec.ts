@@ -117,7 +117,7 @@ describe('Authenticate a visitor', () => {
     const { sut, tokenGeneratorSpy, getVisitorByEmailRepository } = makeSut()
     await sut.execute({ email, password })
     expect(tokenGeneratorSpy.callsCount).toBe(1)
-    expect(tokenGeneratorSpy.email).toBe(getVisitorByEmailRepository.visitor.email)
+    expect(tokenGeneratorSpy.id).toBe(getVisitorByEmailRepository.visitor.id)
   })
 
   it('should return a access token if visitor was authenticate with success', async () => {
