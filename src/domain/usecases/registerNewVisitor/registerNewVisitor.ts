@@ -1,5 +1,6 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
+import { IEncryptorRepository } from '../../repositories'
 import { IGetVisitorByEmailRepository } from '../../repositories/getVisitorByEmailRepository'
 import { IRegisterVisitorRepository } from '../../repositories/registerVisitorRepository'
 import { Email, Name, Password } from '../../valueObjects'
@@ -14,7 +15,8 @@ interface RegisterVisitor {
 export class RegisterNewVisitor implements RegisterVisitor {
   constructor (
     private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
-    private readonly registerVisitorRepository: IRegisterVisitorRepository
+    private readonly registerVisitorRepository: IRegisterVisitorRepository,
+    private readonly encryptorRepository: IEncryptorRepository
   ) {}
 
   async execute (visitorRegisterData: VisitorRegisterData): Promise<RegisterNewVisitorResponse> {

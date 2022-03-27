@@ -1,19 +1,32 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
+import { EncryptorSpy } from '../../tests/encryptorSpy'
 import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
 import { AlreadyExistsVisitorError } from '../errors'
 import { RegisterNewVisitor } from '../registerNewVisitor'
 import { VisitorRepositorySpy } from './InMemoryRegisterVisitorRepository'
 
+const makeEncryptor = (): EncryptorSpy => {
+  return new EncryptorSpy()
+}
 const makeSut = (): {
   sut: RegisterNewVisitor
   visitorRepository: VisitorRepositorySpy
   getVisitorByEmailRepository: InMemoryGetVisitorByEmailRepository
+  encryptorSpy: EncryptorSpy
+
 } => {
+  const encryptorSpy = makeEncryptor()
+
   const visitorRepository = new VisitorRepositorySpy()
   const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository(false)
-  const sut = new RegisterNewVisitor(getVisitorByEmailRepository, visitorRepository)
+  const sut = new RegisterNewVisitor(getVisitorByEmailRepository, visitorRepository, encryptorSpy)
 
-  return { sut, visitorRepository, getVisitorByEmailRepository }
+  return {
+    sut,
+    visitorRepository,
+    getVisitorByEmailRepository,
+    encryptorSpy
+  }
 }
 
 describe('Register New Visitor', () => {
