@@ -1,14 +1,29 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { Establishment } from '../../../entities'
+import { Establishment, EstablishmentData } from '../../../entities'
+import { IGetEstablishmentsRepository } from '../../../repositories'
 import { GetAllAvailableEstablishmentsByTime } from '../getAllAvailableEstablishmentsByTime'
+
+export class GetEstablishmentsRepositorySpy implements IGetEstablishmentsRepository {
+  callsCount = 0
+  async getAllByTime (input: { openHour: number, closedHour: number }): Promise<EstablishmentData[]> {
+    return []
+  }
+}
+
+const makeGetEstablishmentsRepository = (): GetEstablishmentsRepositorySpy => {
+  return new GetEstablishmentsRepositorySpy()
+}
 
 const makeSut = (): {
   sut: GetAllAvailableEstablishmentsByTime
+  getEstablishmentsRepositorySpy: GetEstablishmentsRepositorySpy
 } => {
-  const sut = new GetAllAvailableEstablishmentsByTime()
+  const getEstablishmentsRepositorySpy = makeGetEstablishmentsRepository()
+  const sut = new GetAllAvailableEstablishmentsByTime(getEstablishmentsRepositorySpy)
 
   return {
-    sut
+    sut,
+    getEstablishmentsRepositorySpy
   }
 }
 

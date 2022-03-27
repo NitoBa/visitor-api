@@ -1,6 +1,7 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
 import { Establishment } from '../../entities'
+import { IGetEstablishmentsRepository } from '../../repositories'
 import { Hour } from '../../valueObjects'
 import { GetAllAvailableEstablishmentsByTimeData } from './getAllAvailableEstablishmentsByTimeData'
 import { GetAllAvailableEstablishmentsByTimeResponse } from './getAllAvailableEstablishmentsByTimeResponse'
@@ -9,6 +10,8 @@ export interface IGetAllAvailableEstablishmentsByTime {
 }
 
 export class GetAllAvailableEstablishmentsByTime implements IGetAllAvailableEstablishmentsByTime {
+  constructor (private readonly getEstablishmentsRepository: IGetEstablishmentsRepository) {}
+
   async execute (input: GetAllAvailableEstablishmentsByTimeData): Promise<GetAllAvailableEstablishmentsByTimeResponse> {
     if (input === undefined || input === null) {
       return left(new MissingParamsError(['openHour', 'closedHour']))
