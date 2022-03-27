@@ -1,6 +1,6 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../errors'
-import { RegisterVisitorRepository } from '../../repositories/registerVisitorRepository'
+import { IRegisterVisitorRepository } from '../../repositories/registerVisitorRepository'
 import { Email, Name, Password } from '../../valueObjects'
 import { AlreadyExistsVisitorError } from './errors'
 import { RegisterNewVisitorResponse } from './registerNewVisitorResponse'
@@ -11,7 +11,7 @@ interface RegisterVisitor {
 }
 
 export class RegisterNewVisitor implements RegisterVisitor {
-  constructor (private readonly registerVisitorRepository: RegisterVisitorRepository) {}
+  constructor (private readonly registerVisitorRepository: IRegisterVisitorRepository) {}
 
   async execute (visitorRegisterData: VisitorRegisterData): Promise<RegisterNewVisitorResponse> {
     const { name, email, password } = visitorRegisterData
