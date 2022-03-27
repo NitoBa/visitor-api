@@ -5,6 +5,12 @@ export class InMemoryGetVisitorByEmailRepository implements IGetVisitorByEmailRe
   callsCountExists = 0
   email?: string
   existsVisitor = true
+  visitor: VisitorData = {
+    name: '',
+    email: '',
+    password: ''
+  }
+
   constructor (existsVisitor: boolean = true) {
     this.existsVisitor = existsVisitor
   }
@@ -14,11 +20,12 @@ export class InMemoryGetVisitorByEmailRepository implements IGetVisitorByEmailRe
     this.callsCountExists++
 
     if (this.existsVisitor) {
-      return {
+      this.visitor = {
         name: 'valid_name',
         email: '',
         password: ''
       }
+      return this.visitor
     }
   }
 

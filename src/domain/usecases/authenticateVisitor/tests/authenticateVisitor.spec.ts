@@ -11,6 +11,7 @@ export interface Encryptor {
 class EncryptorSpy implements Encryptor {
   callsCount = 0
   password = 'password'
+  hashedPassword = 'hashedPassword'
   encrypt (value: string): string {
     return ''
   }
@@ -18,6 +19,7 @@ class EncryptorSpy implements Encryptor {
   compare (value: string, hash: string): boolean {
     this.callsCount++
     this.password = value
+    this.hashedPassword = hash
     return true
   }
 }
@@ -106,6 +108,16 @@ describe('Authenticate a visitor', () => {
     await sut.execute({ email, password })
     expect(encryptorSpy.callsCount).toBe(1)
     expect(encryptorSpy.password).toBe(password)
+  })
+
+  it('should call Encryptor with correct parameters', async () => {
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, encryptorSpy, getVisitorByEmailRepository } = makeSut()
+    await sut.execute({ email, password })
+    expect(encryptorSpy.callsCount).toBe(1)
+    expect(encryptorSpy.password).toBe(password)
+    expect(encryptorSpy.hashedPassword).toBe(getVisitorByEmailRepository.visitor.password)
   })
 
 //   it('should return a access token if visitor was authenticate with success', async () => {
