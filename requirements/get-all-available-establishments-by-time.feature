@@ -24,7 +24,7 @@ Usecase: Get All Available Establishments By Time
 InputData: Start time and End Time
 OutputData: List of Establishments or empty list
 
-- [ ] Should return invalid parameter error if start time is invalid
-- [ ] Should return invalid parameter error if end time is invalid
+- [X] Should return invalid parameter error if start time is invalid
+- [X] Should return invalid parameter error if end time is invalid
 - [ ] Should return an empty list if there is no establishment available within the specified time
 - [ ] Must return a list with the establishments available within the informed time
