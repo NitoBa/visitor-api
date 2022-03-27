@@ -120,7 +120,7 @@ describe('Authenticate a visitor', () => {
     expect(tokenGeneratorSpy.id).toBe(getVisitorByEmailRepository.visitor.id)
   })
 
-  it('should return a access token if visitor was authenticate with success', async () => {
+  it('should return an access token if visitor was authenticate with success', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
     const { sut, tokenGeneratorSpy } = makeSut()
