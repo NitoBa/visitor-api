@@ -136,18 +136,12 @@ describe('Authenticate a visitor', () => {
     expect(tokenGeneratorSpy.email).toBe(getVisitorByEmailRepository.visitor.email)
   })
 
-  it('should return a token when token generator is called', async () => {
+  it('should return a access token if visitor was authenticate with success', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
     const { sut, tokenGeneratorSpy } = makeSut()
-    await sut.execute({ email, password })
-    expect(tokenGeneratorSpy.generatedToken).not.toBeNull()
+    const result = await sut.execute({ email, password })
+    expect(result.isRight).toBeTruthy()
+    expect(result.value).toBe(tokenGeneratorSpy.generatedToken)
   })
-
-//   it('should return a access token if visitor was authenticate with success', async () => {
-//     const email = 'validemail@gmail.com'
-//     const password = 'Test1234.'
-//     const { sut } = makeSut()
-//     const result = await sut.execute({ email, password })
-//   })
 })

@@ -33,8 +33,6 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
 
     if (!this.encryptorRepository.compare(password, isVisitorExistents.password)) return left(new InvalidParamError(password))
 
-    this.tokenGeneratorRepository.generate(email)
-
-    return right(undefined)
+    return right(this.tokenGeneratorRepository.generate(email))
   }
 }
