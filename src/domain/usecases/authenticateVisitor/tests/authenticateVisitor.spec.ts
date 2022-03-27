@@ -9,10 +9,11 @@ import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorR
 export class TokenGeneratorRepositorySpy implements ITokenGeneratorRepository {
   callsCount = 0
   email = 'email'
+  generatedToken = 'generatedToken'
   generate (email: string): string {
     this.callsCount++
     this.email = email
-    return 'token'
+    return this.generatedToken
   }
 }
 
@@ -129,10 +130,18 @@ describe('Authenticate a visitor', () => {
   it('should call token generator with correct parameters', async () => {
     const email = 'validemail@gmail.com'
     const password = 'Test1234.'
-    const { sut, tokenGeneratorSpy } = makeSut()
+    const { sut, tokenGeneratorSpy, getVisitorByEmailRepository } = makeSut()
     await sut.execute({ email, password })
     expect(tokenGeneratorSpy.callsCount).toBe(1)
-    expect(tokenGeneratorSpy.email).toBe(email)
+    expect(tokenGeneratorSpy.email).toBe(getVisitorByEmailRepository.email)
+  })
+
+  it('should return a token when token generator is called', async () => {
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, tokenGeneratorSpy } = makeSut()
+    await sut.execute({ email, password })
+    expect(tokenGeneratorSpy.generatedToken).not.toBeNull()
   })
 
 //   it('should return a access token if visitor was authenticate with success', async () => {
