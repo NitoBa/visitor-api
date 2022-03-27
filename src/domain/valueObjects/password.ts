@@ -10,6 +10,8 @@ export class Password {
     return right(new Password(password))
   }
 
+  //   password valid must be a string with at least 6 characters and less than 20
+  //   contains at least one lowercase and one uppercase letter, one number and one special character
   static validate (password: string): boolean {
     const tester = /.*(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[?,.!$#%*@&_¨()+=-]).{6,20}$/
     return tester.test(password)
