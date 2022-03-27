@@ -1,8 +1,8 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
+import { EncryptorSpy } from '../../tests/encryptorSpy'
 import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisitorByEmailRepositorySpy'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
-import { EncryptorSpy } from './encryptorSpy'
 import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorRepository'
 
 const makeEncryptor = (): EncryptorSpy => {
