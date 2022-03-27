@@ -8,7 +8,8 @@ export class InMemoryGetVisitorByEmailRepository implements IGetVisitorByEmailRe
   visitor: VisitorData = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    id: ''
   }
 
   constructor (existsVisitor: boolean = true) {
@@ -21,9 +22,11 @@ export class InMemoryGetVisitorByEmailRepository implements IGetVisitorByEmailRe
 
     if (this.existsVisitor) {
       this.visitor = {
+        id: '',
         name: 'valid_name',
         email: email,
         password: ''
+
       }
       return this.visitor
     }

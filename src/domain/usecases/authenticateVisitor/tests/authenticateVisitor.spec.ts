@@ -4,7 +4,6 @@ import { InMemoryGetVisitorByEmailRepository } from '../../tests/inMemoryGetVisi
 import { TokenGeneratorRepositorySpy } from '../../tests/tokenGeneratorSpy'
 import { AuthenticateVisitor } from '../authenticateVisitor'
 import { VisitorNotRegistered } from '../errors'
-import { AuthenticateVisitorRepositorySpy } from './inMemoryAuthenticateVisitorRepository'
 
 const makeTokenGenerator = (): TokenGeneratorRepositorySpy => {
   return new TokenGeneratorRepositorySpy()
@@ -16,7 +15,6 @@ const makeEncryptor = (): EncryptorSpy => {
 
 const makeSut = (): {
   sut: AuthenticateVisitor
-  authenticateVisitorRepositorySpy: AuthenticateVisitorRepositorySpy
   getVisitorByEmailRepository: InMemoryGetVisitorByEmailRepository
   encryptorSpy: EncryptorSpy
   tokenGeneratorSpy: TokenGeneratorRepositorySpy
@@ -25,7 +23,6 @@ const makeSut = (): {
   const encryptorSpy = makeEncryptor()
   const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository()
 
-  const authenticateVisitorRepositorySpy = new AuthenticateVisitorRepositorySpy()
   const sut = new AuthenticateVisitor(
     getVisitorByEmailRepository,
     encryptorSpy,
@@ -33,7 +30,6 @@ const makeSut = (): {
   )
   return {
     sut,
-    authenticateVisitorRepositorySpy,
     getVisitorByEmailRepository,
     encryptorSpy,
     tokenGeneratorSpy
