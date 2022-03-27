@@ -1,4 +1,4 @@
-import { IUpdateAccessTokenRepository } from '../../domain/repositories'
+import { IUpdateAccessTokenRepository } from '../../data/repositories'
 
 export class UpdateAccessTokenRepositorySpy implements IUpdateAccessTokenRepository {
   callsCount = 0
