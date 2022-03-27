@@ -1,6 +1,5 @@
-import { left, right } from '../../../shared/either'
+import { left } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
-import { Establishment } from '../../entities'
 import { IGetEstablishmentsRepository } from '../../repositories'
 import { Hour } from '../../valueObjects'
 import { GetAllAvailableEstablishmentsByTimeData } from './getAllAvailableEstablishmentsByTimeData'
@@ -20,7 +19,10 @@ export class GetAllAvailableEstablishmentsByTime implements IGetAllAvailableEsta
 
     if (!Hour.validate(openHour)) return left(new InvalidParamError(openHour.toString()))
     if (!Hour.validate(closedHour)) return left(new InvalidParamError(closedHour.toString()))
-    const establishments: Establishment[] = []
-    return right(establishments)
+
+    await this.getEstablishmentsRepository.getAllByTime({ openHour, closedHour })
+
+    // const establishments: Establishment[] = []
+    // return right(establishments)
   }
 }

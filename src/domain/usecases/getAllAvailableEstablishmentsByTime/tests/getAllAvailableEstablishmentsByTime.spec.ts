@@ -1,11 +1,16 @@
 import { InvalidParamError, MissingParamsError } from '../../../../shared/errors'
-import { Establishment, EstablishmentData } from '../../../entities'
+import { EstablishmentData } from '../../../entities'
 import { IGetEstablishmentsRepository } from '../../../repositories'
 import { GetAllAvailableEstablishmentsByTime } from '../getAllAvailableEstablishmentsByTime'
 
 export class GetEstablishmentsRepositorySpy implements IGetEstablishmentsRepository {
   callsCount = 0
+  openHour = 0
+  closedHour = 0
   async getAllByTime (input: { openHour: number, closedHour: number }): Promise<EstablishmentData[]> {
+    this.callsCount++
+    this.openHour = input.openHour
+    this.closedHour = input.closedHour
     return []
   }
 }
@@ -53,14 +58,24 @@ describe('Get All Available Establishments By Time', () => {
     expect(result.value).toEqual(new InvalidParamError(closedHour.toString()))
   })
 
-  it('should return an empty list if open hour and closed not match', async () => {
-    const { sut } = makeSut()
+  it('should call getEstablishments repository with correct parameters', async () => {
+    const { sut, getEstablishmentsRepositorySpy } = makeSut()
     const openHour = 12
     const closedHour = 18
-    const result = await sut.execute({ openHour, closedHour })
-    expect(result.isRight).toBeTruthy()
-    expect(result.value).toEqual(new Array<Establishment>())
+    await sut.execute({ openHour, closedHour })
+    expect(getEstablishmentsRepositorySpy.callsCount).toBe(1)
+    expect(getEstablishmentsRepositorySpy.openHour).toBe(openHour)
+    expect(getEstablishmentsRepositorySpy.closedHour).toBe(closedHour)
   })
+
+  //   it('should return an empty list if open hour and closed not match', async () => {
+  //     const { sut } = makeSut()
+  //     const openHour = 12
+  //     const closedHour = 18
+  //     const result = await sut.execute({ openHour, closedHour })
+  //     expect(result.isRight).toBeTruthy()
+  //     expect(result.value).toEqual(new Array<Establishment>())
+  //   })
   //   it('should return an error if end time is invalid', () => {
 
 //   })
