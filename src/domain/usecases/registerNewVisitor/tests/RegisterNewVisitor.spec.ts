@@ -19,7 +19,11 @@ const makeSut = (): {
 
   const visitorRepository = new VisitorRepositorySpy()
   const getVisitorByEmailRepository = new InMemoryGetVisitorByEmailRepository(false)
-  const sut = new RegisterNewVisitor(getVisitorByEmailRepository, visitorRepository, encryptorSpy)
+  const sut = new RegisterNewVisitor({
+    getVisitorByEmailRepository,
+    registerVisitorRepository: visitorRepository,
+    encryptorRepository: encryptorSpy
+  })
 
   return {
     sut,

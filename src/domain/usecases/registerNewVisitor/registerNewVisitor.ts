@@ -12,14 +12,23 @@ interface RegisterVisitor {
   execute: (visitorRegisterData: VisitorRegisterData) => Promise<RegisterNewVisitorResponse>
 }
 
+export interface RegisterVisitorDeps {
+  registerVisitorRepository: IRegisterVisitorRepository
+  encryptorRepository: IEncryptorRepository
+  getVisitorByEmailRepository: IGetVisitorByEmailRepository
+}
+
 export class RegisterNewVisitor implements RegisterVisitor {
   constructor (
-    private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
-    private readonly registerVisitorRepository: IRegisterVisitorRepository,
-    private readonly encryptorRepository: IEncryptorRepository
+    private readonly deps: RegisterVisitorDeps
   ) {}
 
   async execute (visitorRegisterData: VisitorRegisterData): Promise<RegisterNewVisitorResponse> {
+    const {
+      encryptorRepository,
+      getVisitorByEmailRepository,
+      registerVisitorRepository
+    } = this.deps
     const { name, email, password } = visitorRegisterData
 
     if (name.length === 0 && email.length === 0 && password.length === 0) {
@@ -28,7 +37,7 @@ export class RegisterNewVisitor implements RegisterVisitor {
 
     if (!Email.validate(email)) return left(new InvalidParamError(email))
 
-    const isExists = await this.getVisitorByEmailRepository.existsByEmail(email)
+    const isExists = await getVisitorByEmailRepository.existsByEmail(email)
 
     if (isExists) return left(new AlreadyExistsVisitorError(email))
 
@@ -36,9 +45,9 @@ export class RegisterNewVisitor implements RegisterVisitor {
 
     if (!Password.validate(password)) return left(new InvalidParamError(password))
 
-    const encryptedPassword = this.encryptorRepository.encrypt(password)
+    const encryptedPassword = encryptorRepository.encrypt(password)
 
-    await this.registerVisitorRepository.register({ name, email, password: encryptedPassword })
+    await registerVisitorRepository.register({ name, email, password: encryptedPassword })
 
     return right(undefined)
   }
