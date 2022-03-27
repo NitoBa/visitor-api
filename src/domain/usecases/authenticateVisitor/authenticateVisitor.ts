@@ -1,12 +1,11 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
-import { IGetVisitorByEmailRepository } from '../../repositories'
+import { IEncryptorRepository, IGetVisitorByEmailRepository } from '../../repositories'
 import { IAuthenticateVisitorRepository } from '../../repositories/authenticateVisitorRepository'
 import { Email, Password } from '../../valueObjects'
 import { AuthenticateVisitorData } from './authenticateVisitorData'
 import { AuthenticateVisitorResponse } from './authenticateVisitorResponse'
 import { VisitorNotRegistered } from './errors'
-import { Encryptor } from './tests/authenticateVisitor.spec'
 
 interface IAuthenticateVisitor {
   execute: (params: AuthenticateVisitorData) => Promise<AuthenticateVisitorResponse>
@@ -16,7 +15,7 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
   constructor (
     private readonly getVisitorByEmailRepository: IGetVisitorByEmailRepository,
     private readonly authenticateVisitorRepository: IAuthenticateVisitorRepository,
-    private readonly encryptor: Encryptor
+    private readonly encryptorRepository: IEncryptorRepository
   ) {}
 
   async execute (input: AuthenticateVisitorData): Promise<AuthenticateVisitorResponse> {
@@ -31,7 +30,7 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
     const isExists = await this.getVisitorByEmailRepository.getByEmail(email)
     if (isExists === null || isExists === undefined) return left(new VisitorNotRegistered())
 
-    if (!this.encryptor.compare(password, isExists.password)) return left(new InvalidParamError(password))
+    if (!this.encryptorRepository.compare(password, isExists.password)) return left(new InvalidParamError(password))
 
     return right(undefined)
   }
