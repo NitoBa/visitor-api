@@ -18,8 +18,8 @@ Feature: Login of visitor
 
 Usecase: Authenticate visitor
 
-- [ ] Should return invalid parameters error if email and password are not provided
-- [ ] Should return an email error if the email is invalid
-- [ ] Should return a password error if the password is invalid
-- [ ] Should return a non-existent visitor error if the visitor is not registered
+- [X] Should return invalid parameters error if email and password are not provided
+- [X] Should return an email error if the email is invalid
+- [X] Should return a password error if the password is invalid
+- [X] Should return a non-existent visitor error if the visitor is not registered
 - [ ] Must return an authentication token if the visitor is successfully authenticated
