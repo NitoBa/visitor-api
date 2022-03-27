@@ -1,4 +1,5 @@
+/* eslint-disable @typescript-eslint/semi */
 /* eslint-disable no-multiple-empty-lines */
-// eslint-disable-next-line @typescript-eslint/semi
+export * from './authenticateVisitor/authenticateVisitor';
 export * from './registerNewVisitor/registerNewVisitor';
 
