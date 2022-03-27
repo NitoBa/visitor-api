@@ -1,6 +1,6 @@
 import { Either, left, right } from '../../../shared/either'
 import { InvalidParamError } from '../../../shared/errors'
-import { Email, ID, Name } from '../../valueObjects'
+import { Email, ID, Name } from '../../validators'
 import { SchedulingData } from './schedulingData'
 
 type SchedulingResult = Either<InvalidParamError, Scheduling>
@@ -8,9 +8,9 @@ type SchedulingResult = Either<InvalidParamError, Scheduling>
 export class Scheduling {
   private constructor (
     private readonly id: string,
-    private readonly visitorName: Name,
-    private readonly visitorEmail: Email,
-    private readonly establishmentName: Name,
+    private readonly visitorName: string,
+    private readonly visitorEmail: string,
+    private readonly establishmentName: string,
     private readonly createdAt: Date,
     private readonly updatedAt: Date
   ) {}
@@ -47,9 +47,9 @@ export class Scheduling {
 
     const newSchedule = new Scheduling(
       id,
-      visitorNameOrError.value,
-      visitorEmailOrError.value,
-      establishmentNameOrError.value,
+      visitorName,
+      visitorEmail,
+      establishmentName,
       createdAt,
       updatedAt
     )

@@ -1,5 +1,5 @@
 import { InvalidParamError } from '../../../shared/errors'
-import { Password } from '../../valueObjects'
+import { Password } from '../password'
 
 describe('Password Validator', () => {
   it('should return false if password is empty', () => {

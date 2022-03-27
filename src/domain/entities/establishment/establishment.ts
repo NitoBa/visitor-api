@@ -1,16 +1,16 @@
 import { Either, left, right } from '../../../shared/either'
 import { InvalidParamError } from '../../../shared/errors'
-import { Hour, Name, OperatingDays } from '../../valueObjects'
+import { Hour, Name, OperatingDays } from '../../validators'
 import { EstablishmentData } from './establishmentData'
 
 type EstablishmentResult = Either<InvalidParamError, Establishment>
 
 export class Establishment {
   private constructor (
-    private readonly name: Name,
-    private readonly openHour: Hour,
-    private readonly closedHour: Hour,
-    private readonly operatingDays: OperatingDays
+    private readonly name: string,
+    private readonly openHour: number,
+    private readonly closedHour: number,
+    private readonly operatingDays: string[]
   ) {}
 
   static create (establishmentData: EstablishmentData): EstablishmentResult {
@@ -38,10 +38,10 @@ export class Establishment {
     }
 
     const establishment = new Establishment(
-      nameOrError.value,
-      openHourOrError.value,
-      closedHourOrError.value,
-      operatingDaysOrError.value
+      name,
+      openHour,
+      closedHour,
+      operatingDays
     )
 
     return right(establishment)

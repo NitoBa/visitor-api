@@ -1,24 +1,22 @@
 import { Either, left, right } from '../../../shared/either'
 import { InvalidParamError } from '../../../shared/errors'
-import { Email, ID, Name, Password } from '../../valueObjects'
+import { Email, ID, Name } from '../../validators'
 import { VisitorData } from './visitorData'
 
 type VisitorResult = Either<InvalidParamError, Visitor>
 
 export class Visitor {
   private constructor (
-    private readonly id: ID,
-    private readonly name: Name,
-    private readonly email: Email,
-    private readonly password: Password
+    private readonly id: string,
+    private readonly name: string,
+    private readonly email: string
   ) {}
 
   static create (visitorData: VisitorData): VisitorResult {
-    const { id, name, email, password } = visitorData
+    const { id, name, email } = visitorData
     const idOrError = ID.create(id)
     const emailOrError = Email.create(email)
     const nameOrError = Name.create(name)
-    const passwordOrError = Password.create(password)
 
     if (idOrError.isLeft()) {
       return left(idOrError.value)
@@ -32,15 +30,10 @@ export class Visitor {
       return left(nameOrError.value)
     }
 
-    if (passwordOrError.isLeft()) {
-      return left(passwordOrError.value)
-    }
-
     const visitor = new Visitor(
-      idOrError.value,
-      nameOrError.value,
-      emailOrError.value,
-      passwordOrError.value
+      id,
+      name,
+      email
     )
 
     return right(visitor)

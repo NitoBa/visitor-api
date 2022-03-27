@@ -7,7 +7,6 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'nameValid',
       email: 'invalidEmail',
-      password: 'Test1234.',
       id: randomUUID()
     })
 
@@ -19,7 +18,6 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'nameValid',
       email: 'invalidEmail',
-      password: 'Test1234.',
       id: 'invalidId'
     })
 
@@ -31,7 +29,6 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'nameValid',
       email: '',
-      password: '',
       id: randomUUID()
     })
 
@@ -43,7 +40,6 @@ describe('Visitor Domain Entity', () => {
     const sut = Visitor.create({
       name: 'not_valid_name',
       email: 'validemail@gmail.com',
-      password: '',
       id: randomUUID()
 
     })
@@ -52,24 +48,10 @@ describe('Visitor Domain Entity', () => {
     expect(sut.value).toEqual(new InvalidParamError('not_valid_name'))
   })
 
-  it('should not create a visitor with invalid password', () => {
-    const sut = Visitor.create({
-      name: 'validName',
-      email: 'validemail@gmail.com',
-      password: 'invalidpassword',
-      id: randomUUID()
-
-    })
-
-    expect(sut.isLeft()).toBeTruthy()
-    expect(sut.value).toEqual(new InvalidParamError('invalidpassword'))
-  })
-
   it('should create a visitor if correct parameters are provided', () => {
     const sut = Visitor.create({
       name: 'validName',
       email: 'validemail@gmail.com',
-      password: 'Test123.',
       id: randomUUID()
     })
 

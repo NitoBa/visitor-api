@@ -1,7 +1,7 @@
 import { left, right } from '../../../shared/either'
 import { InvalidParamError, MissingParamsError } from '../../../shared/errors'
 import { IEncryptorRepository, IGetVisitorByEmailRepository, ITokenGeneratorRepository, IUpdateAccessTokenRepository } from '../../repositories'
-import { Email, Password } from '../../valueObjects'
+import { Email, Password } from '../../validators'
 import { AuthenticateVisitorData } from './authenticateVisitorData'
 import { AuthenticateVisitorResponse } from './authenticateVisitorResponse'
 import { VisitorNotRegistered } from './errors'
