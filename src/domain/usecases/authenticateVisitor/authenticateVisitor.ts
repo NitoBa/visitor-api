@@ -31,7 +31,7 @@ export class AuthenticateVisitor implements IAuthenticateVisitor {
     const isExists = await this.getVisitorByEmailRepository.getByEmail(email)
     if (isExists === null || isExists === undefined) return left(new VisitorNotRegistered())
 
-    this.encryptor.compare(password, isExists.password)
+    if (!this.encryptor.compare(password, isExists.password)) return left(new InvalidParamError(password))
 
     return right(undefined)
   }

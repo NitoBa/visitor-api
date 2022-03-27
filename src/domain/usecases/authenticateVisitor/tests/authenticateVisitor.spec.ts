@@ -120,6 +120,16 @@ describe('Authenticate a visitor', () => {
     expect(encryptorSpy.hashedPassword).toBe(getVisitorByEmailRepository.visitor.password)
   })
 
+  it('should return an error if password is incorrect', async () => {
+    const email = 'validemail@gmail.com'
+    const password = 'Test1234.'
+    const { sut, encryptorSpy } = makeSut()
+    encryptorSpy.compare = jest.fn().mockReturnValueOnce(false)
+    const result = await sut.execute({ email, password })
+    expect(result.isLeft).toBeTruthy()
+    expect(result.value).toEqual(new InvalidParamError(password))
+  })
+
 //   it('should return a access token if visitor was authenticate with success', async () => {
 //     const email = 'validemail@gmail.com'
 //     const password = 'Test1234.'
